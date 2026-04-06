@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NarrationScripts",
+  "description": "NarrationAgent 출력 — 나레이션 대본",
+  "type": "object",
+  "required": ["voice", "voiceRate", "scripts"],
+  "properties": {
+    "voice": { "type": "string" },
+    "voiceRate": { "type": "string", "pattern": "^[+-]?\\d+%$" },
+    "scripts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["slideIndex", "script"],
+        "properties": {
+          "slideIndex": { "type": "integer", "minimum": 1 },
+          "script": { "type": "string", "minLength": 1 },
+          "emphasis": { "type": "array", "items": { "type": "string" } },
+          "pauseAfterMs": { "type": "integer", "minimum": 0 }
+        }
+      }
+    }
+  }
+}

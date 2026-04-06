@@ -1,0 +1,39 @@
+{
+  "presentationTitle": "샘플 프레젠테이션",
+  "presentationType": "A",
+  "totalSlides": 3,
+  "slides": [
+    {
+      "slideIndex": 1,
+      "type": "cover",
+      "title": "AutoPresent Studio",
+      "subtitle": "자동 프레젠테이션 생성 시스템",
+      "content": {
+        "presenter": "발표자",
+        "date": "2026-03-28",
+        "organization": "AutoPresent"
+      },
+      "fragments": []
+    },
+    {
+      "slideIndex": 2,
+      "type": "bullets",
+      "title": "주요 기능",
+      "content": {},
+      "fragments": [
+        { "id": "f1", "order": 1, "content": "다양한 입력 형식 지원 (PDF, PPTX, 웹)", "type": "bullet" },
+        { "id": "f2", "order": 2, "content": "27종 슬라이드 자동 생성", "type": "bullet" },
+        { "id": "f3", "order": 3, "content": "AI 나레이션 + TTS 음성", "type": "bullet" },
+        { "id": "f4", "order": 4, "content": "Remotion 기반 MP4 영상 렌더링", "type": "bullet" }
+      ]
+    },
+    {
+      "slideIndex": 3,
+      "type": "conclusion",
+      "title": "감사합니다",
+      "subtitle": "질문이 있으시면 말씀해주세요",
+      "content": {},
+      "fragments": []
+    }
+  ]
+}

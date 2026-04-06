@@ -1,0 +1,52 @@
+{
+  "sourceType": "text",
+  "title": "AutoPresent Studio 소개",
+  "summary": "AutoPresent Studio는 입력 자료를 자동으로 프레젠테이션 영상으로 변환하는 멀티에이전트 시스템입니다.",
+  "sections": [
+    {
+      "sectionIndex": 1,
+      "heading": "시스템 개요",
+      "content": "AutoPresent Studio는 10개 에이전트와 15개 스킬로 구성된 프레젠테이션 자동화 시스템입니다.",
+      "keyPoints": [
+        "10개 전문 에이전트",
+        "15개 스킬",
+        "9단계 파이프라인"
+      ],
+      "dataPoints": [],
+      "images": [],
+      "suggestedSlideType": "cover"
+    },
+    {
+      "sectionIndex": 2,
+      "heading": "주요 기능",
+      "content": "다양한 입력 형식 지원, 27종 슬라이드 자동 생성, AI 나레이션, MP4 영상 렌더링",
+      "keyPoints": [
+        "PDF/PPTX/DOCX/웹 입력 지원",
+        "27종 슬라이드 타입",
+        "AI 나레이션 + TTS",
+        "Remotion MP4 렌더링"
+      ],
+      "dataPoints": [
+        { "label": "슬라이드 타입", "value": "27종", "source": "내부 설계" },
+        { "label": "에이전트 수", "value": "10개", "source": "내부 설계" }
+      ],
+      "images": [],
+      "suggestedSlideType": "bullets"
+    },
+    {
+      "sectionIndex": 3,
+      "heading": "마무리",
+      "content": "감사합니다.",
+      "keyPoints": [],
+      "dataPoints": [],
+      "images": [],
+      "suggestedSlideType": "conclusion"
+    }
+  ],
+  "metadata": {
+    "totalPages": 1,
+    "language": "ko",
+    "extractedImages": 0,
+    "processingNotes": ["텍스트 직접 입력"]
+  }
+}

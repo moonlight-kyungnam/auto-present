@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SlidesData",
+  "description": "SlideAgent 출력 — 슬라이드 구성 데이터",
+  "type": "object",
+  "required": ["presentationTitle", "presentationType", "totalSlides", "slides"],
+  "properties": {
+    "presentationTitle": { "type": "string" },
+    "presentationType": { "type": "string", "enum": ["A", "B", "C", "D"] },
+    "totalSlides": { "type": "integer", "minimum": 1 },
+    "slides": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["slideIndex", "type", "title", "content", "fragments"],
+        "properties": {
+          "slideIndex": { "type": "integer", "minimum": 1 },
+          "type": {
+            "type": "string",
+            "enum": [
+              "cover", "toc", "bullets", "stats", "table", "timeline",
+              "problem-solution", "quote", "team", "conclusion",
+              "market", "crisis", "concept", "formula", "example",
+              "framework", "hypothesis", "methodology", "result-analysis",
+              "gantt", "budget", "swot", "kpi-dashboard", "governance",
+              "tam-sam-som", "hero", "persona"
+            ]
+          },
+          "title": { "type": "string" },
+          "subtitle": { "type": "string" },
+          "content": { "type": "object" },
+          "fragments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "order", "content", "type"],
+              "properties": {
+                "id": { "type": "string" },
+                "order": { "type": "integer", "minimum": 1 },
+                "content": { "type": "string" },
+                "type": { "type": "string", "enum": ["text", "image", "chart", "table", "bullet", "number"] },
+                "animation": { "type": "string", "enum": ["fade", "slide-up", "slide-left", "zoom", "none"] }
+              }
+            }
+          },
+          "notes": { "type": "string" },
+          "backgroundImage": { "type": "string" }
+        }
+      }
+    }
+  }
+}

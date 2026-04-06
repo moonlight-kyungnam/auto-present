@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DurationsData",
+  "description": "TTSAgent 출력 — 슬라이드별 재생 시간",
+  "type": "object",
+  "required": ["fps", "totalDurationMs", "totalFrames", "slides"],
+  "properties": {
+    "fps": { "type": "integer", "minimum": 1 },
+    "totalDurationMs": { "type": "integer", "minimum": 0 },
+    "totalFrames": { "type": "integer", "minimum": 0 },
+    "slides": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["slideIndex", "fileName", "durationMs", "durationFrames"],
+        "properties": {
+          "slideIndex": { "type": "integer", "minimum": 1 },
+          "fileName": { "type": "string", "pattern": "^slide-\\d{2}\\.mp3$" },
+          "durationMs": { "type": "integer", "minimum": 0 },
+          "durationFrames": { "type": "integer", "minimum": 0 }
+        }
+      }
+    }
+  }
+}

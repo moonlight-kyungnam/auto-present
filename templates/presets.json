@@ -1,0 +1,87 @@
+{
+  "_comment": "발표 유형별 기본 설정 프리셋",
+  "A": {
+    "name": "학술/교육",
+    "description": "학술 발표, 강의, 교육 자료용",
+    "themeId": "academic-blue",
+    "voice": "ko-KR-InJoonNeural",
+    "voiceRate": "-5%",
+    "fps": 15,
+    "suggestedSlideTypes": ["cover", "toc", "bullets", "concept", "formula", "methodology", "result-analysis", "table", "quote", "conclusion"],
+    "theme": {
+      "colors": {
+        "primary": "#2563EB",
+        "secondary": "#1E3A5F",
+        "accent": "#F59E0B",
+        "background": "#0C1222",
+        "surface": "#162032",
+        "text": "#F8FAFC",
+        "textSecondary": "#94A3B8"
+      },
+      "fonts": { "heading": "Pretendard", "body": "Pretendard" }
+    }
+  },
+  "B": {
+    "name": "비즈니스/기획",
+    "description": "사업 계획, 전략 발표, 기획 보고서용",
+    "themeId": "deep-space",
+    "voice": "ko-KR-InJoonNeural",
+    "voiceRate": "-5%",
+    "fps": 15,
+    "suggestedSlideTypes": ["cover", "toc", "bullets", "stats", "table", "problem-solution", "framework", "gantt", "budget", "kpi-dashboard", "conclusion"],
+    "theme": {
+      "colors": {
+        "primary": "#6C63FF",
+        "secondary": "#3F3D56",
+        "accent": "#FF6584",
+        "background": "#0F0E17",
+        "surface": "#1A1A2E",
+        "text": "#FFFFFE",
+        "textSecondary": "#A7A9BE"
+      },
+      "fonts": { "heading": "Pretendard", "body": "Pretendard" }
+    }
+  },
+  "C": {
+    "name": "투자/피칭",
+    "description": "투자 유치, IR 피칭, 스타트업 데모데이용",
+    "themeId": "pitch-dark",
+    "voice": "ko-KR-SunHiNeural",
+    "voiceRate": "0%",
+    "fps": 15,
+    "suggestedSlideTypes": ["cover", "problem-solution", "tam-sam-som", "market", "stats", "team", "timeline", "budget", "kpi-dashboard", "conclusion"],
+    "theme": {
+      "colors": {
+        "primary": "#10B981",
+        "secondary": "#064E3B",
+        "accent": "#F43F5E",
+        "background": "#030712",
+        "surface": "#111827",
+        "text": "#F9FAFB",
+        "textSecondary": "#9CA3AF"
+      },
+      "fonts": { "heading": "Pretendard", "body": "Pretendard" }
+    }
+  },
+  "D": {
+    "name": "마케팅/브랜딩",
+    "description": "마케팅 전략, 브랜드 소개, 캠페인 발표용",
+    "themeId": "brand-vibrant",
+    "voice": "ko-KR-SunHiNeural",
+    "voiceRate": "0%",
+    "fps": 15,
+    "suggestedSlideTypes": ["cover", "hero", "persona", "stats", "bullets", "timeline", "example", "quote", "team", "conclusion"],
+    "theme": {
+      "colors": {
+        "primary": "#EC4899",
+        "secondary": "#831843",
+        "accent": "#8B5CF6",
+        "background": "#0F0515",
+        "surface": "#1C0A28",
+        "text": "#FDF2F8",
+        "textSecondary": "#D1A6C4"
+      },
+      "fonts": { "heading": "Pretendard", "body": "Pretendard" }
+    }
+  }
+}

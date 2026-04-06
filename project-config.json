@@ -1,0 +1,38 @@
+{
+  "_comment": "AutoPresent Studio 프로젝트 설정 파일 — ProjectInitAgent가 자동 생성",
+  "projectName": "my-presentation",
+  "presentationType": "A",
+  "compositionId": "Presentation",
+  "outputFile": "output.mp4",
+  "fps": 15,
+  "width": 1920,
+  "height": 1080,
+  "bufferSeconds": 2,
+  "voice": "ko-KR-InJoonNeural",
+  "voiceRate": "-5%",
+  "themeId": "deep-space",
+  "subtitle": {
+    "enabled": false,
+    "mode": "soft",
+    "language": "ko",
+    "style": {
+      "fontSize": 24,
+      "fontSizeRange": { "min": 14, "max": 48, "step": 2, "_comment": "사용자 조절 가능 범위" },
+      "fontFamily": "Malgun Gothic",
+      "fontColor": "#FFFFFF",
+      "outlineColor": "#000000",
+      "outlineWidth": 2,
+      "position": "bottom",
+      "positionOptions": ["top", "middle", "bottom"],
+      "marginTop": 30,
+      "marginBottom": 50,
+      "_comment_position": "top=상단, middle=중간, bottom=하단"
+    },
+    "burnIn": false
+  },
+  "pdf": {
+    "enabled": true,
+    "paperSize": "A4-landscape",
+    "_comment": "웹 프레젠테이션에서 PDF 다운로드 버튼 활성화"
+  }
+}

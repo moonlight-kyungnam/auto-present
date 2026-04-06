@@ -1,0 +1,10 @@
+{
+  "fps": 15,
+  "totalDurationMs": 25000,
+  "totalFrames": 375,
+  "slides": [
+    { "slideIndex": 1, "fileName": "slide-01.mp3", "durationMs": 8000, "durationFrames": 120 },
+    { "slideIndex": 2, "fileName": "slide-02.mp3", "durationMs": 12000, "durationFrames": 180 },
+    { "slideIndex": 3, "fileName": "slide-03.mp3", "durationMs": 5000, "durationFrames": 75 }
+  ]
+}

@@ -1,0 +1,23 @@
+# AutoPresent Studio — Python 의존성
+# 설치: pip install -r requirements.txt
+
+# TTS 음성 생성
+edge-tts>=6.1.0
+
+# 오디오 메타데이터 (재생 시간 측정)
+mutagen>=1.47.0
+
+# PDF 파싱
+PyMuPDF>=1.23.0
+
+# PPTX 파싱
+python-pptx>=0.6.21
+
+# 이미지 처리
+Pillow>=10.0.0
+
+# 자막 SRT 처리
+pysrt>=1.1.2
+
+# JSON 스키마 검증
+jsonschema>=4.20.0

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ThemeConfig",
+  "description": "ThemeAgent 출력 — 컬러 테마 설정",
+  "type": "object",
+  "required": ["themeId", "colors", "fonts"],
+  "properties": {
+    "themeId": { "type": "string" },
+    "colors": {
+      "type": "object",
+      "required": ["primary", "secondary", "accent", "background", "surface", "text", "textSecondary"],
+      "properties": {
+        "primary": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "secondary": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "accent": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "background": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "surface": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "text": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "textSecondary": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" }
+      }
+    },
+    "fonts": {
+      "type": "object",
+      "required": ["heading", "body"],
+      "properties": {
+        "heading": { "type": "string" },
+        "body": { "type": "string" },
+        "code": { "type": "string" }
+      }
+    },
+    "gradients": {
+      "type": "object",
+      "properties": {
+        "primary": { "type": "string" },
+        "background": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ContentBrief",
+  "description": "ContentIngestAgent 출력 — 입력 자료 분석 결과",
+  "type": "object",
+  "required": ["sourceType", "title", "sections", "metadata"],
+  "properties": {
+    "sourceType": {
+      "type": "string",
+      "enum": ["pdf", "pptx", "docx", "text", "web-research", "multi"]
+    },
+    "title": { "type": "string" },
+    "summary": { "type": "string" },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["sectionIndex", "heading", "content"],
+        "properties": {
+          "sectionIndex": { "type": "integer", "minimum": 1 },
+          "heading": { "type": "string" },
+          "content": { "type": "string" },
+          "keyPoints": { "type": "array", "items": { "type": "string" } },
+          "dataPoints": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string" },
+                "value": { "type": "string" },
+                "source": { "type": "string" }
+              }
+            }
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": { "type": "string" },
+                "caption": { "type": "string" },
+                "ocrText": { "type": "string" },
+                "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+              }
+            }
+          },
+          "suggestedSlideType": { "type": "string" }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "totalPages": { "type": "integer" },
+        "language": { "type": "string" },
+        "extractedImages": { "type": "integer" },
+        "processingNotes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

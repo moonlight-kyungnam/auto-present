@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoPresent Studio 소개</title>
+<style>
+:root {
+  --color-primary: #6C63FF;
+  --color-secondary: #3F3D56;
+  --color-accent: #FF6584;
+  --color-bg: #0F0E17;
+  --color-surface: #1A1A2E;
+  --color-text: #FFFFFE;
+  --color-text-secondary: #A7A9BE;
+  --font-heading: Pretendard;
+  --font-body: Pretendard;
+  --gradient-primary: linear-gradient(135deg, #6C63FF 0%, #3F3D56 100%);
+  --gradient-bg: linear-gradient(135deg, #0F0E17 0%, #1A1A2E 60%, #2D2B55 100%);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body), 'Pretendard', -apple-system, sans-serif; }
+
+.slide-container { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+.slide { position: absolute; inset: 0; display: none; flex-direction: column; padding: 80px 120px; opacity: 0; transition: opacity 0.4s ease; }
+.slide.active { display: flex; opacity: 1; }
+
+[data-fragment] { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+[data-fragment].visible { opacity: 1; transform: translateY(0); }
+[data-fragment].slide-left { transform: translateX(-30px); }
+[data-fragment].slide-left.visible { transform: translateX(0); }
+[data-fragment].zoom { transform: scale(0.8); }
+[data-fragment].zoom.visible { transform: scale(1); }
+
+/* cover */
+.slide-cover { justify-content: center; align-items: center; text-align: center; background: var(--gradient-bg); }
+.slide-cover .badge { font-size: 18px; color: var(--color-primary); border: 1px solid var(--color-primary); border-radius: 20px; padding: 6px 20px; letter-spacing: 2px; margin-bottom: 24px; }
+.slide-cover h1 { font-size: 68px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+.slide-cover .subtitle { font-size: 30px; color: var(--color-text-secondary); margin-bottom: 48px; }
+.slide-cover .meta { font-size: 18px; color: var(--color-text-secondary); display: flex; gap: 24px; justify-content: center; }
+
+/* bullets */
+.slide-bullets h1 { font-size: 48px; font-weight: 700; margin-bottom: 36px; }
+.bullet-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 22px; border-radius: 10px; margin-bottom: 14px; background: rgba(255,255,255,0.03); border-left: 4px solid transparent; }
+.bullet-item.highlight { background: rgba(108,99,255,0.12); border-left-color: var(--color-primary); }
+.bullet-dot { color: var(--color-primary); font-size: 18px; margin-top: 4px; flex-shrink: 0; }
+.bullet-text { font-size: 26px; line-height: 1.5; }
+.bullet-item.highlight .bullet-text { color: var(--color-text); }
+.bullet-item:not(.highlight) .bullet-text { color: var(--color-text-secondary); }
+
+/* stats */
+.slide-stats h1 { font-size: 48px; font-weight: 700; margin-bottom: 40px; }
+.stats-grid { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; flex: 1; align-items: center; }
+.stat-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 36px 44px; text-align: center; min-width: 180px; }
+.stat-box.highlight { background: rgba(108,99,255,0.15); border-color: var(--color-primary); }
+.stat-value { font-size: 52px; font-weight: 800; margin-bottom: 8px; }
+.stat-box.highlight .stat-value { color: var(--color-primary); }
+.stat-label { font-size: 18px; color: var(--color-text-secondary); }
+
+/* conclusion */
+.slide-conclusion { justify-content: center; align-items: center; text-align: center; background: var(--gradient-bg); }
+.slide-conclusion h1 { font-size: 60px; font-weight: 800; margin-bottom: 14px; }
+.slide-conclusion .subtitle { font-size: 26px; color: var(--color-text-secondary); margin-bottom: 36px; }
+
+.progress-bar { position: fixed; bottom: 0; left: 0; height: 4px; background: var(--color-primary); transition: width 0.3s ease; z-index: 100; }
+.slide-number { position: fixed; bottom: 16px; right: 24px; font-size: 14px; color: var(--color-text-secondary); opacity: 0.6; z-index: 100; }
+
+@media (max-width: 1024px) { .slide { padding: 40px 60px; } .slide-cover h1 { font-size: 48px; } }
+</style>
+</head>
+<body>
+
+<div class="slide-container" id="slideContainer">
+
+  <!-- 슬라이드 1: Cover -->
+  <div class="slide slide-cover active">
+    <div class="badge" data-fragment="0">PRESENTATION</div>
+    <h1 data-fragment="1">AutoPresent Studio</h1>
+    <div class="subtitle" data-fragment="2">자동 프레젠테이션 생성 시스템</div>
+    <div class="meta" data-fragment="3">
+      <span>2026-03-28</span>
+      <span>발표자</span>
+      <span>AutoPresent</span>
+    </div>
+  </div>
+
+  <!-- 슬라이드 2: Bullets -->
+  <div class="slide slide-bullets" style="background: var(--gradient-bg);">
+    <h1 data-fragment="0">주요 기능</h1>
+    <div class="bullet-item highlight" data-fragment="1">
+      <span class="bullet-dot">●</span>
+      <span class="bullet-text">다양한 입력 형식 지원 (PDF, PPTX, 웹)</span>
+    </div>
+    <div class="bullet-item" data-fragment="2">
+      <span class="bullet-dot">●</span>
+      <span class="bullet-text">27종 슬라이드 자동 생성</span>
+    </div>
+    <div class="bullet-item" data-fragment="3">
+      <span class="bullet-dot">●</span>
+      <span class="bullet-text">AI 나레이션 + TTS 음성</span>
+    </div>
+    <div class="bullet-item highlight" data-fragment="4">
+      <span class="bullet-dot">●</span>
+      <span class="bullet-text">Remotion 기반 MP4 영상 렌더링</span>
+    </div>
+  </div>
+
+  <!-- 슬라이드 3: Stats -->
+  <div class="slide slide-stats" style="background: var(--gradient-bg);">
+    <h1 data-fragment="0">시스템 규모</h1>
+    <div class="stats-grid">
+      <div class="stat-box highlight zoom" data-fragment="1">
+        <div class="stat-value">10</div>
+        <div class="stat-label">전문 에이전트</div>
+      </div>
+      <div class="stat-box zoom" data-fragment="2">
+        <div class="stat-value">15</div>
+        <div class="stat-label">스킬</div>
+      </div>
+      <div class="stat-box zoom" data-fragment="3">
+        <div class="stat-value">27</div>
+        <div class="stat-label">슬라이드 타입</div>
+      </div>
+      <div class="stat-box zoom" data-fragment="4">
+        <div class="stat-value">9</div>
+        <div class="stat-label">파이프라인 단계</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 슬라이드 4: Conclusion -->
+  <div class="slide slide-conclusion">
+    <h1 data-fragment="0">감사합니다</h1>
+    <div class="subtitle" data-fragment="1">질문이 있으시면 말씀해주세요</div>
+  </div>
+
+</div>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-number" id="slideNumber"></div>
+
+<script>
+(function() {
+  'use strict';
+  let currentSlide = 0, currentFragment = -1;
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+
+  function init() { if (totalSlides === 0) return; showSlide(0); updateProgress(); bindEvents(); }
+
+  function showSlide(index) {
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+    currentSlide = index; currentFragment = -1; updateProgress();
+  }
+
+  function getFragments(si) {
+    return Array.from(slides[si].querySelectorAll('[data-fragment]'))
+      .sort((a, b) => parseInt(a.dataset.fragment) - parseInt(b.dataset.fragment));
+  }
+
+  function next() {
+    const frags = getFragments(currentSlide);
+    const nf = currentFragment + 1;
+    if (nf < frags.length) { frags[nf].classList.add('visible'); currentFragment = nf; }
+    else if (currentSlide < totalSlides - 1) showSlide(currentSlide + 1);
+  }
+
+  function prev() {
+    const frags = getFragments(currentSlide);
+    if (currentFragment >= 0) { frags[currentFragment].classList.remove('visible'); currentFragment--; }
+    else if (currentSlide > 0) {
+      showSlide(currentSlide - 1);
+      const pf = getFragments(currentSlide);
+      pf.forEach(f => f.classList.add('visible'));
+      currentFragment = pf.length - 1;
+    }
+  }
+
+  function updateProgress() {
+    const pct = totalSlides > 1 ? (currentSlide / (totalSlides - 1)) * 100 : 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('slideNumber').textContent = (currentSlide + 1) + ' / ' + totalSlides;
+  }
+
+  function bindEvents() {
+    document.addEventListener('keydown', function(e) {
+      switch(e.key) {
+        case 'ArrowRight': case 'ArrowDown': case ' ': case 'Enter': e.preventDefault(); next(); break;
+        case 'ArrowLeft': case 'ArrowUp': case 'Backspace': e.preventDefault(); prev(); break;
+        case 'Home': e.preventDefault(); showSlide(0); break;
+        case 'End': e.preventDefault(); showSlide(totalSlides - 1); break;
+        case 'f': case 'F': e.preventDefault();
+          if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+          else document.exitFullscreen(); break;
+      }
+    });
+    let tx = 0, ty = 0;
+    document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 50) dx < 0 ? next() : prev();
+    }, { passive: true });
+    document.addEventListener('click', e => { const x = e.clientX / window.innerWidth; if (x > 0.65) next(); else if (x < 0.35) prev(); });
+  }
+
+  document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+})();
+</script>
+</body>
+</html>

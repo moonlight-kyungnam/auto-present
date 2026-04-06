@@ -1,0 +1,22 @@
+{
+  "name": "auto-present-video",
+  "version": "1.0.0",
+  "description": "AutoPresent Studio — Remotion 영상 렌더링",
+  "scripts": {
+    "preview": "remotion preview src/index.ts",
+    "render": "remotion render src/index.ts Presentation output.mp4 --codec=h264 --image-format=jpeg --jpeg-quality=80",
+    "build": "remotion render src/index.ts Presentation output.mp4 --codec=h264 --concurrency=4"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.242",
+    "@remotion/player": "4.0.242",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "4.0.242"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.0"
+  }
+}

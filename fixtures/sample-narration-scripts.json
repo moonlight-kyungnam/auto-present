@@ -1,0 +1,24 @@
+{
+  "voice": "ko-KR-InJoonNeural",
+  "voiceRate": "-5%",
+  "scripts": [
+    {
+      "slideIndex": 1,
+      "script": "안녕하세요. AutoPresent Studio를 소개합니다. 이 시스템은 다양한 입력 자료를 자동으로 프레젠테이션 영상으로 변환해주는 도구입니다.",
+      "emphasis": ["AutoPresent Studio", "자동"],
+      "pauseAfterMs": 500
+    },
+    {
+      "slideIndex": 2,
+      "script": "주요 기능을 살펴보겠습니다. 첫째, PDF, 파워포인트, 웹 조사 등 다양한 입력 형식을 지원합니다. 둘째, 27종의 슬라이드를 자동으로 생성합니다. 셋째, AI 나레이션과 TTS 음성을 제공합니다. 넷째, Remotion 기반으로 MP4 영상을 렌더링합니다.",
+      "emphasis": ["27종", "AI 나레이션"],
+      "pauseAfterMs": 500
+    },
+    {
+      "slideIndex": 3,
+      "script": "감사합니다. 질문이 있으시면 말씀해주세요.",
+      "emphasis": [],
+      "pauseAfterMs": 1000
+    }
+  ]
+}

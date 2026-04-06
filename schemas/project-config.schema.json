@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProjectConfig",
+  "description": "ProjectInitAgent 출력 — 프로젝트 설정",
+  "type": "object",
+  "required": ["projectName", "presentationType", "compositionId", "outputFile", "fps", "width", "height", "voice", "subtitle"],
+  "properties": {
+    "projectName": { "type": "string" },
+    "presentationType": { "type": "string", "enum": ["A", "B", "C", "D"] },
+    "compositionId": { "type": "string" },
+    "outputFile": { "type": "string" },
+    "fps": { "type": "integer", "minimum": 1, "maximum": 60 },
+    "width": { "type": "integer", "minimum": 640 },
+    "height": { "type": "integer", "minimum": 360 },
+    "bufferSeconds": { "type": "number", "minimum": 0 },
+    "voice": { "type": "string" },
+    "voiceRate": { "type": "string" },
+    "themeId": { "type": "string" },
+    "subtitle": {
+      "type": "object",
+      "required": ["enabled", "mode", "language"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "mode": { "type": "string", "enum": ["soft", "burn-in", "remotion", "disabled"] },
+        "language": { "type": "string" },
+        "style": {
+          "type": "object",
+          "properties": {
+            "fontSize": { "type": "integer" },
+            "fontFamily": { "type": "string" },
+            "fontColor": { "type": "string" },
+            "outlineColor": { "type": "string" },
+            "outlineWidth": { "type": "integer" },
+            "bgEnabled": { "type": "boolean" },
+            "bgColor": { "type": "string" },
+            "bgPadding": { "type": "string" },
+            "position": { "type": "string", "enum": ["top", "bottom"] },
+            "marginBottom": { "type": "integer" }
+          }
+        },
+        "burnIn": { "type": "boolean" }
+      }
+    }
+  }
+}

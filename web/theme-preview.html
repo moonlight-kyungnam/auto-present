@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoPresent Studio — 테마 미리보기</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Pretendard, -apple-system, sans-serif; background: #0a0a0a; color: #fff; padding: 40px; }
+
+h1 { font-size: 32px; margin-bottom: 8px; }
+.subtitle { color: #888; margin-bottom: 40px; }
+
+.theme-section { margin-bottom: 48px; }
+.theme-section h2 { font-size: 20px; color: #aaa; margin-bottom: 16px; border-bottom: 1px solid #333; padding-bottom: 8px; }
+
+/* 색상 팔레트 */
+.color-grid { display: flex; gap: 16px; flex-wrap: wrap; }
+.color-card { width: 160px; border-radius: 12px; overflow: hidden; background: #1a1a1a; border: 1px solid #333; }
+.color-swatch { height: 80px; }
+.color-info { padding: 12px; }
+.color-name { font-size: 14px; color: #aaa; margin-bottom: 4px; }
+.color-hex { font-size: 16px; font-weight: 600; font-family: monospace; }
+
+/* 폰트 미리보기 */
+.font-preview { background: #1a1a1a; border-radius: 12px; padding: 24px; margin-bottom: 12px; border: 1px solid #333; }
+.font-label { font-size: 14px; color: #aaa; margin-bottom: 8px; }
+
+/* 그라데이션 */
+.gradient-preview { height: 120px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 12px; }
+
+/* 슬라이드 미니 프리뷰 */
+.slide-preview { width: 480px; height: 270px; border-radius: 12px; border: 1px solid #333; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; }
+
+.controls { margin-top: 40px; padding: 24px; background: #1a1a1a; border-radius: 12px; border: 1px solid #333; }
+.controls label { display: block; margin-bottom: 8px; font-size: 14px; color: #aaa; }
+.controls input, .controls select { background: #0a0a0a; border: 1px solid #444; color: #fff; padding: 8px 12px; border-radius: 6px; width: 200px; margin-bottom: 16px; }
+.controls button { background: #6C63FF; color: #fff; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-size: 16px; }
+.controls button:hover { background: #5B54E0; }
+
+textarea#jsonInput { width: 100%; height: 200px; background: #0a0a0a; border: 1px solid #444; color: #fff; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 13px; resize: vertical; }
+</style>
+</head>
+<body>
+
+<h1>테마 미리보기</h1>
+<p class="subtitle">theme-config.json의 색상, 폰트, 그라데이션을 시각적으로 확인합니다.</p>
+
+<!-- JSON 입력 -->
+<div class="controls">
+  <label>theme-config.json 붙여넣기:</label>
+  <textarea id="jsonInput">{
+  "themeId": "deep-space",
+  "colors": {
+    "primary": "#6C63FF",
+    "secondary": "#3F3D56",
+    "accent": "#FF6584",
+    "background": "#0F0E17",
+    "surface": "#1A1A2E",
+    "text": "#FFFFFE",
+    "textSecondary": "#A7A9BE"
+  },
+  "fonts": {
+    "heading": "Pretendard",
+    "body": "Pretendard"
+  },
+  "gradients": {
+    "primary": "linear-gradient(135deg, #6C63FF 0%, #3F3D56 100%)",
+    "background": "linear-gradient(135deg, #0F0E17 0%, #1A1A2E 60%, #2D2B55 100%)"
+  }
+}</textarea>
+  <button onclick="applyTheme()">적용</button>
+</div>
+
+<div id="preview"></div>
+
+<script>
+function applyTheme() {
+  try {
+    const theme = JSON.parse(document.getElementById('jsonInput').value);
+    renderPreview(theme);
+  } catch (e) {
+    alert('JSON 파싱 오류: ' + e.message);
+  }
+}
+
+function renderPreview(theme) {
+  const c = theme.colors || {};
+  const f = theme.fonts || {};
+  const g = theme.gradients || {};
+
+  let html = '';
+
+  // 색상 팔레트
+  html += '<div class="theme-section"><h2>색상 팔레트</h2><div class="color-grid">';
+  for (const [name, hex] of Object.entries(c)) {
+    html += `<div class="color-card">
+      <div class="color-swatch" style="background:${hex}"></div>
+      <div class="color-info">
+        <div class="color-name">${name}</div>
+        <div class="color-hex">${hex}</div>
+      </div>
+    </div>`;
+  }
+  html += '</div></div>';
+
+  // 폰트
+  html += '<div class="theme-section"><h2>폰트</h2>';
+  if (f.heading) {
+    html += `<div class="font-preview">
+      <div class="font-label">Heading: ${f.heading}</div>
+      <div style="font-family:${f.heading},sans-serif;font-size:36px;font-weight:700;color:${c.text || '#fff'}">AutoPresent Studio</div>
+    </div>`;
+  }
+  if (f.body) {
+    html += `<div class="font-preview">
+      <div class="font-label">Body: ${f.body}</div>
+      <div style="font-family:${f.body},sans-serif;font-size:20px;color:${c.textSecondary || '#aaa'}">다양한 입력 자료를 자동으로 프레젠테이션 영상으로 변환합니다.</div>
+    </div>`;
+  }
+  html += '</div>';
+
+  // 그라데이션
+  if (g.primary || g.background) {
+    html += '<div class="theme-section"><h2>그라데이션</h2>';
+    if (g.primary) html += `<div class="gradient-preview" style="background:${g.primary};color:${c.text || '#fff'}">Primary Gradient</div>`;
+    if (g.background) html += `<div class="gradient-preview" style="background:${g.background};color:${c.text || '#fff'}">Background Gradient</div>`;
+    html += '</div>';
+  }
+
+  // 슬라이드 미니 프리뷰
+  html += '<div class="theme-section"><h2>슬라이드 미리보기</h2>';
+  html += `<div class="slide-preview" style="background:${g.background || c.background || '#000'}">
+    <div style="font-size:12px;color:${c.primary || '#6C63FF'};border:1px solid ${c.primary || '#6C63FF'};border-radius:12px;padding:3px 12px;margin-bottom:12px;letter-spacing:1px">PRESENTATION</div>
+    <div style="font-family:${f.heading || 'sans-serif'},sans-serif;font-size:32px;font-weight:800;color:${c.text || '#fff'};margin-bottom:8px">프레젠테이션 제목</div>
+    <div style="font-size:16px;color:${c.textSecondary || '#aaa'}">부제목이 들어갑니다</div>
+  </div>`;
+  html += '</div>';
+
+  document.getElementById('preview').innerHTML = html;
+}
+
+// 초기 로드
+applyTheme();
+</script>
+</body>
+</html>
