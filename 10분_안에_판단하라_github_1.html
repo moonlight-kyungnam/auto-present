@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10분 안에 판단하라 — 일반 시민을 위한 재난 대피 강의</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Inter:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* 1. CSS 변수 — 네이비 뎁스 기본 */
+    :root {
+      --bg-deep:#0D1B2A;--bg-card:#1B263B;--bg-panel:#22304A;
+      --accent:#778DA9;--accent-dim:#415A77;--accent-rgb:119,141,169;
+      --accent-glow:rgba(119,141,169,0.18);
+      --ivory:#E0E1DD;--ivory-dim:#A0A5A0;
+      --border:rgba(119,141,169,0.25);
+      --font-main:'Noto Sans KR','Inter',sans-serif;
+      --font-code:'JetBrains Mono',monospace;
+      --red:#E53935;--orange:#FB8C00;--yellow:#FDD835;--green:#43A047;
+    }
+    [data-theme="light"]{
+      --bg-deep:#ECEEED;--bg-card:#FAFAFA;--bg-panel:#E0E1DD;
+      --ivory:#0D1B2A;--ivory-dim:#415A77;--border:rgba(119,141,169,0.3);
+    }
+
+    /* 컬러 테마 프리셋 */
+    [data-color-theme="gold"]{--bg-deep:#0a0a0f;--bg-card:#12121a;--bg-panel:#1a1a28;--accent:#C6A55C;--accent-dim:#8a6f35;--accent-rgb:198,165,92;--accent-glow:rgba(198,165,92,0.15);--ivory:#F5F0E8;--ivory-dim:#b8b0a0;--border:rgba(198,165,92,0.2);}
+    [data-color-theme="gold"][data-theme="light"]{--bg-deep:#f5f5f0;--bg-card:#ffffff;--bg-panel:#eeeee8;--ivory:#1a1a1a;--ivory-dim:#555550;--border:rgba(198,165,92,0.3);}
+    [data-color-theme="slate-rose"]{--bg-deep:#2C3D55;--bg-card:#354862;--bg-panel:#3E4C5E;--accent:#84828F;--accent-dim:#6A687A;--accent-rgb:132,130,143;--accent-glow:rgba(132,130,143,0.18);--ivory:#E8E6EF;--ivory-dim:#A8A6B5;--border:rgba(132,130,143,0.25);}
+    [data-color-theme="slate-rose"][data-theme="light"]{--bg-deep:#EEEDF3;--bg-card:#FAFAFE;--bg-panel:#E5E3EC;--ivory:#2C3D55;--ivory-dim:#536271;--border:rgba(132,130,143,0.3);}
+    [data-color-theme="forest-teal"]{--bg-deep:#2F3E46;--bg-card:#354F52;--bg-panel:#3A5558;--accent:#84A98C;--accent-dim:#52796F;--accent-rgb:132,169,140;--accent-glow:rgba(132,169,140,0.18);--ivory:#CAD2C5;--ivory-dim:#96A598;--border:rgba(132,169,140,0.25);}
+    [data-color-theme="forest-teal"][data-theme="light"]{--bg-deep:#EDF1EA;--bg-card:#FAFCF8;--bg-panel:#DDE5D8;--ivory:#2F3E46;--ivory-dim:#52796F;--border:rgba(132,169,140,0.3);}
+    [data-color-theme="cyber-teal"]{--bg-deep:#0B132B;--bg-card:#1C2541;--bg-panel:#22304A;--accent:#5BC0BE;--accent-dim:#3A506B;--accent-rgb:91,192,190;--accent-glow:rgba(91,192,190,0.18);--ivory:#E0FFF8;--ivory-dim:#8ECFC8;--border:rgba(91,192,190,0.25);}
+    [data-color-theme="cyber-teal"][data-theme="light"]{--bg-deep:#ECF9F8;--bg-card:#FAFFFC;--bg-panel:#DDF2F0;--ivory:#0B132B;--ivory-dim:#3A506B;--border:rgba(91,192,190,0.3);}
+
+    /* 2. 리셋 + 타이포 */
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html,body{width:100vw;height:100dvh;overflow:hidden;background:var(--bg-deep);font-family:var(--font-main);color:var(--ivory);}
+    h1{font-size:clamp(2.2rem,5.5vw,3.5rem);line-height:1.15;font-weight:900;}
+    h2{font-size:clamp(1.9rem,4.2vw,2.6rem);line-height:1.2;font-weight:700;}
+    .subtitle{font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ivory-dim);line-height:1.5;}
+    .slide-label{font-size:12px;letter-spacing:3px;color:var(--accent);font-family:var(--font-code);height:18px;text-transform:uppercase;}
+
+    /* 3. 슬라이드 레이아웃 */
+    #deck{position:relative;width:100%;height:100%;}
+    .slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px 80px;pointer-events:none;will-change:opacity,transform;overflow-y:auto;}
+    .slide.active{pointer-events:auto;}
+    .content{width:100%;max-width:720px;}
+    .content.wide{max-width:880px;}
+
+    .slide-0{background:radial-gradient(ellipse at 60% 40%,#162a44 0%,var(--bg-deep) 70%);}
+    .slide-1{background:radial-gradient(ellipse at 30% 60%,#0f1d2f 0%,var(--bg-deep) 70%);}
+    .slide-2{background:radial-gradient(ellipse at 70% 30%,#15253a 0%,var(--bg-deep) 70%);}
+    .slide-3{background:radial-gradient(ellipse at 40% 70%,#102030 0%,var(--bg-deep) 70%);}
+    .slide-4{background:radial-gradient(ellipse at 50% 50%,#182840 0%,var(--bg-deep) 70%);}
+    .slide-5{background:radial-gradient(ellipse at 20% 40%,#0f1a2a 0%,var(--bg-deep) 70%);}
+    .slide-6{background:radial-gradient(ellipse at 80% 60%,#1a2d45 0%,var(--bg-deep) 70%);}
+    .slide-7{background:radial-gradient(ellipse at 35% 35%,#122030 0%,var(--bg-deep) 70%);}
+    .slide-8{background:radial-gradient(ellipse at 65% 55%,#152540 0%,var(--bg-deep) 70%);}
+    .slide-9{background:radial-gradient(ellipse at 45% 45%,#0f1828 0%,var(--bg-deep) 70%);}
+    .slide-10{background:radial-gradient(ellipse at 55% 35%,#1a2a40 0%,var(--bg-deep) 70%);}
+    .slide-11{background:radial-gradient(ellipse at 25% 55%,#0f1d30 0%,var(--bg-deep) 70%);}
+    .slide-12{background:radial-gradient(ellipse at 75% 45%,#152238 0%,var(--bg-deep) 70%);}
+    .slide-13{background:radial-gradient(ellipse at 40% 60%,#102535 0%,var(--bg-deep) 70%);}
+    .slide-14{background:radial-gradient(ellipse at 60% 30%,#182a42 0%,var(--bg-deep) 70%);}
+    .slide-15{background:radial-gradient(ellipse at 30% 50%,#0f1a28 0%,var(--bg-deep) 70%);}
+    .slide-16{background:radial-gradient(ellipse at 70% 40%,#1a2840 0%,var(--bg-deep) 70%);}
+    .slide-17{background:radial-gradient(ellipse at 50% 60%,#122030 0%,var(--bg-deep) 70%);}
+    .slide-18{background:radial-gradient(ellipse at 40% 40%,#152540 0%,var(--bg-deep) 70%);}
+    .slide-19{background:radial-gradient(ellipse at 60% 50%,#0f1828 0%,var(--bg-deep) 70%);}
+    .slide-20{background:radial-gradient(ellipse at 35% 65%,#1a2a40 0%,var(--bg-deep) 70%);}
+    .slide-21{background:radial-gradient(ellipse at 65% 35%,#0f1d30 0%,var(--bg-deep) 70%);}
+    .slide-22{background:radial-gradient(ellipse at 45% 55%,#152238 0%,var(--bg-deep) 70%);}
+    .slide-23{background:radial-gradient(ellipse at 55% 45%,#102535 0%,var(--bg-deep) 70%);}
+    .slide-24{background:radial-gradient(ellipse at 50% 40%,#182a42 0%,var(--bg-deep) 70%);}
+    .slide-25{background:radial-gradient(ellipse at 40% 50%,#0f1a28 0%,var(--bg-deep) 70%);}
+    .slide-26{background:radial-gradient(ellipse at 50% 50%,#1a2840 0%,var(--bg-deep) 70%);}
+    [data-theme="light"] [class*="slide-"]{background:var(--bg-deep)!important;}
+
+    /* 4. 전환 효과 */
+    [data-transition="fade"] .slide{opacity:0;transition:opacity 0.45s ease;}
+    [data-transition="fade"] .slide.active{opacity:1;pointer-events:auto;}
+    [data-transition="slide-h"] .slide{opacity:1;transform:translateX(100%);transition:transform 0.45s cubic-bezier(0.4,0,0.2,1);}
+    [data-transition="slide-h"] .slide.active{transform:translateX(0);pointer-events:auto;}
+    [data-transition="slide-h"] .slide.exit-left{transform:translateX(-100%);}
+    [data-transition="slide-h"] .slide.exit-right{transform:translateX(100%);}
+    [data-transition="slide-v"] .slide{opacity:1;transform:translateY(100%);transition:transform 0.45s cubic-bezier(0.4,0,0.2,1);}
+    [data-transition="slide-v"] .slide.active{transform:translateY(0);pointer-events:auto;}
+    [data-transition="slide-v"] .slide.exit-up{transform:translateY(-100%);}
+    [data-transition="slide-v"] .slide.exit-down{transform:translateY(100%);}
+    [data-transition="none"] .slide{opacity:0;transition:none;}
+    [data-transition="none"] .slide.active{opacity:1;pointer-events:auto;}
+
+    /* 5. Fragment */
+    .fragment{opacity:0;transform:translateY(20px);transition:opacity 0.4s ease,transform 0.4s ease;}
+    .fragment.visible{opacity:1;transform:translateY(0);}
+    [data-reveal="all-at-once"] .fragment{opacity:1;transform:none;transition:none;}
+
+    /* 6. 컴포넌트 */
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+    .card{background:var(--bg-panel);border:1px solid var(--border);border-radius:14px;padding:22px 20px;transition:transform 0.22s ease,border-color 0.22s ease,box-shadow 0.22s ease;}
+    .card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 8px 28px var(--accent-glow),0 0 0 1px rgba(var(--accent-rgb),0.12);}
+    .card-title{font-weight:700;color:var(--ivory);margin-bottom:8px;font-size:1.1rem;}
+    .card-body{color:var(--ivory-dim);font-size:0.95rem;line-height:1.5;}
+    .stat-row{display:flex;gap:12px;flex-wrap:wrap;}
+    .stat-box{flex:1;min-width:110px;background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;transition:transform 0.22s ease,border-color 0.22s ease,box-shadow 0.22s ease;}
+    .stat-box:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 8px 28px var(--accent-glow);}
+    .stat-num{font-size:1.9rem;font-weight:700;color:var(--accent);font-family:var(--font-code);}
+    .stat-label{color:var(--ivory-dim);font-size:0.85rem;margin-top:4px;}
+    .bullet-list{list-style:none;padding:0;}
+    .bullet-list li{padding:6px 0 6px 20px;position:relative;color:var(--ivory-dim);line-height:1.6;font-size:1.05rem;}
+    .bullet-list li::before{content:"▸";color:var(--accent);position:absolute;left:0;font-size:1rem;}
+    .bullet-list li strong{color:var(--ivory);}
+    .data-table{width:100%;border-collapse:collapse;font-size:0.95rem;}
+    .data-table th{background:var(--bg-panel);color:var(--accent);font-family:var(--font-code);font-weight:500;padding:12px 14px;text-align:left;border-bottom:1px solid var(--border);}
+    .data-table td{padding:12px 14px;color:var(--ivory-dim);border-bottom:1px solid rgba(255,255,255,0.05);}
+    .data-table tr:hover td{background:var(--accent-glow);}
+    .summary-quote{background:var(--bg-panel);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:18px 20px;color:var(--ivory-dim);font-size:1.05rem;line-height:1.6;}
+    .checklist{list-style:none;padding:0;}
+    .checklist li{display:flex;align-items:center;gap:12px;padding:8px 0;cursor:pointer;user-select:none;color:var(--ivory-dim);font-size:1.05rem;transition:color 0.2s;}
+    .checklist li .box{width:22px;height:22px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background 0.2s,border-color 0.2s;}
+    .checklist li.checked{color:var(--ivory-dim);text-decoration:line-through;text-decoration-color:var(--accent-dim);}
+    .checklist li.checked .box{background:var(--accent);border-color:var(--accent);}
+    .checklist li.checked .box::after{content:'';display:block;width:5px;height:9px;border:2px solid var(--bg-deep);border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px);}
+    .badge{display:inline-block;padding:4px 12px;border-radius:20px;background:var(--accent-glow);color:var(--accent);border:1px solid var(--border);font-size:0.85rem;font-family:var(--font-code);}
+    .title-tag{display:inline-block;padding:6px 16px;border-radius:20px;background:var(--accent-glow);color:var(--accent);border:1px solid var(--border);font-size:0.95rem;font-family:var(--font-code);margin-bottom:16px;}
+    .tip-box{background:rgba(119,141,169,0.08);border:1px solid rgba(119,141,169,0.25);border-radius:12px;padding:14px 18px;margin-top:16px;font-size:1rem;line-height:1.5;color:var(--ivory);}
+    .tip-box .tip-icon{color:var(--accent);margin-right:8px;font-size:1.1rem;}
+    .part-slide{text-align:center;padding-top:0!important;}
+    .part-num{font-size:0.95rem;letter-spacing:6px;color:var(--ivory-dim);font-family:var(--font-code);margin-bottom:14px;}
+    .part-title{font-size:clamp(2.4rem,6vw,3.8rem);font-weight:900;margin-bottom:18px;}
+    .part-sub{font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ivory-dim);}
+    .danger-bar{display:flex;border-radius:10px;overflow:hidden;margin:16px 0;}
+    .danger-seg{padding:14px 8px;text-align:center;color:#fff;font-weight:700;font-size:0.95rem;}
+    .danger-seg small{display:block;font-weight:400;font-size:0.85rem;margin-top:4px;}
+    .smoke-row{display:flex;gap:14px;justify-content:center;}
+    .smoke-box{width:140px;height:180px;border-radius:10px;position:relative;overflow:hidden;border:2px solid var(--border);}
+    .smoke-box .room{position:absolute;inset:0;}
+    .smoke-box .smoke-fill{position:absolute;left:0;right:0;top:0;}
+    .smoke-box .fire{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:1.5rem;}
+    .smoke-box .label{text-align:center;margin-top:8px;font-size:1rem;color:var(--ivory-dim);}
+    .timeline{position:relative;padding-left:30px;margin:10px 0;}
+    .timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:3px;background:var(--accent);border-radius:2px;}
+    .timeline-item{position:relative;margin-bottom:18px;padding-left:20px;}
+    .timeline-item::before{content:'';position:absolute;left:-26px;top:8px;width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid var(--bg-deep);}
+    .timeline-year{font-family:var(--font-code);color:var(--accent);font-size:1.1rem;font-weight:700;}
+    .timeline-text{color:var(--ivory-dim);font-size:1.05rem;line-height:1.5;margin-top:4px;}
+    .case-box{background:rgba(229,57,53,0.08);border:1px solid rgba(229,57,53,0.3);border-radius:12px;padding:14px 18px;margin-bottom:12px;}
+    .case-box .case-tag{display:inline-block;background:var(--red);color:#fff;font-size:0.8rem;font-weight:700;padding:3px 10px;border-radius:6px;margin-bottom:8px;}
+    .case-box .case-text{color:var(--ivory);font-size:1.05rem;line-height:1.5;}
+    .compare-good{background:rgba(67,160,71,0.08);border:1px solid rgba(67,160,71,0.3);border-radius:12px;padding:14px 16px;}
+    .compare-bad{background:rgba(229,57,53,0.08);border:1px solid rgba(229,57,53,0.3);border-radius:12px;padding:14px 16px;}
+    .compare-label{font-weight:700;font-size:1.05rem;margin-bottom:8px;}
+    .compare-label.good{color:#43A047;}
+    .compare-label.bad{color:#E53935;}
+    .conclusion-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:14px;padding:22px 20px;text-align:center;}
+    .conclusion-card h3{font-size:1.8rem;font-weight:900;margin-bottom:10px;}
+    .conclusion-card p{font-size:1rem;line-height:1.5;color:var(--ivory-dim);}
+    .vs-divider{display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--accent);font-weight:900;}
+    .mt-sm{margin-top:10px;}.mt-md{margin-top:18px;}.mt-lg{margin-top:28px;}
+    .mb-sm{margin-bottom:10px;}.mb-md{margin-bottom:18px;}
+    .text-accent{color:var(--accent);}
+    .text-red{color:var(--red);}
+    .text-center{text-align:center;}
+    .text-lg{font-size:1.2rem;}
+    .text-xl{font-size:1.35rem;}
+    .divider{height:1px;background:var(--border);margin:16px 0;}
+    .callout{background:var(--accent-glow);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-top:12px;color:var(--ivory-dim);font-size:0.85rem;line-height:1.5;}
+    .source{color:var(--ivory-dim);font-size:0.75rem;margin-top:8px;font-style:italic;}
+
+    /* 8. 네비게이션 */
+    #progress-wrap{position:fixed;bottom:56px;left:0;right:0;height:3px;z-index:51;}
+    #progress-bar{height:100%;background:var(--accent);transition:width 0.4s ease;}
+    #ui-bar{position:fixed;bottom:0;left:0;right:0;height:56px;background:rgba(13,27,42,0.88);backdrop-filter:blur(10px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:50;font-family:var(--font-main);font-size:0.85rem;}
+    .nav-btn{padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:var(--bg-panel);color:var(--ivory-dim);cursor:pointer;font-family:var(--font-main);font-size:0.8rem;transition:border-color 0.2s,color 0.2s;}
+    .nav-btn:hover{border-color:var(--accent);color:var(--ivory);}
+    .nav-btn:disabled{opacity:0.3;cursor:not-allowed;}
+    #hint{color:var(--ivory-dim);font-size:0.75rem;}
+    .speaker-note{display:none;position:fixed;bottom:60px;left:50%;transform:translateX(-50%);max-width:780px;width:90%;padding:16px 20px;background:rgba(13,27,42,0.95);border:1px solid var(--accent-glow);border-radius:10px;color:var(--ivory-dim);font-size:0.95rem;line-height:1.5;backdrop-filter:blur(10px);z-index:100;}
+    body.show-notes .slide.active .speaker-note{display:block;}
+    #timer{position:fixed;top:16px;right:20px;font-family:var(--font-code);font-size:0.85rem;color:var(--ivory-dim);opacity:0;transition:opacity 0.3s;z-index:90;}
+    #timer.running{opacity:1;}
+    #timer.overtime{color:#e74c3c;animation:pulse 1s infinite;}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+    #autoplay-badge{position:fixed;top:16px;left:20px;font-family:var(--font-code);font-size:0.75rem;color:var(--accent);opacity:0;transition:opacity 0.3s;z-index:90;}
+    #autoplay-badge.active{opacity:1;}
+    #minimap{display:none;position:fixed;inset:0;z-index:200;background:rgba(13,27,42,0.94);backdrop-filter:blur(12px);overflow-y:auto;padding:40px;}
+    #minimap.open{display:flex;justify-content:center;align-items:flex-start;}
+    .minimap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;max-width:900px;width:100%;}
+    .minimap-tile{background:var(--bg-panel);border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;transition:border-color 0.2s,transform 0.2s;}
+    .minimap-tile:hover{border-color:var(--accent);transform:translateY(-2px);}
+    .minimap-tile.current{border-color:var(--accent);box-shadow:0 0 12px var(--accent-glow);}
+    .minimap-num{font-family:var(--font-code);font-size:0.7rem;color:var(--accent);margin-bottom:6px;}
+    .minimap-title{font-size:0.85rem;color:var(--ivory);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+
+    /* 9. 설정 패널 */
+    #settings-panel{position:fixed;top:0;right:0;width:300px;height:100%;background:rgba(13,27,42,0.96);backdrop-filter:blur(16px);border-left:1px solid var(--border);transform:translateX(100%);transition:transform 0.3s ease;z-index:300;padding:20px;overflow-y:auto;font-family:var(--font-main);}
+    #settings-panel.open{transform:translateX(0);}
+    .settings-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;font-size:0.95rem;font-weight:700;color:var(--ivory);}
+    #settings-close{background:none;border:none;color:var(--ivory-dim);font-size:1.1rem;cursor:pointer;transition:color 0.2s;}
+    #settings-close:hover{color:var(--ivory);}
+    .settings-group{margin-bottom:20px;}
+    .settings-label{font-size:0.75rem;font-family:var(--font-code);color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+    .settings-options{display:flex;flex-wrap:wrap;gap:6px;}
+    .settings-options .opt{padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg-panel);color:var(--ivory-dim);font-size:0.8rem;font-family:var(--font-main);cursor:pointer;transition:all 0.2s ease;}
+    .settings-options .opt:hover{border-color:var(--accent);color:var(--ivory);}
+    .settings-options .opt.active{background:var(--accent);color:var(--bg-deep);border-color:var(--accent);font-weight:700;}
+    .theme-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle;border:1px solid rgba(255,255,255,0.2);}
+    .settings-timer-input{display:flex;align-items:center;gap:8px;}
+    .settings-timer-input input{width:60px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg-panel);color:var(--ivory);font-family:var(--font-code);font-size:0.85rem;text-align:center;}
+    .settings-timer-input input:focus{outline:none;border-color:var(--accent);}
+    .settings-timer-input span{color:var(--ivory-dim);font-size:0.8rem;}
+
+    /* 라이트 테마 오버라이드 */
+    [data-theme="light"] #ui-bar{background:rgba(236,238,237,0.9);border-top-color:rgba(119,141,169,0.2);}
+    [data-theme="light"] .speaker-note{background:rgba(236,238,237,0.95);color:var(--ivory-dim);}
+    [data-theme="light"] #minimap{background:rgba(236,238,237,0.95);}
+    [data-theme="light"] .minimap-tile{background:var(--bg-card);}
+    [data-theme="light"] #timer{color:var(--ivory-dim);}
+    [data-theme="light"] #timer.overtime{color:#dc2626;}
+    [data-theme="light"] #settings-panel{background:rgba(236,238,237,0.96);}
+    [data-theme="light"] #settings-close{color:var(--ivory-dim);}
+    [data-theme="light"] #settings-close:hover{color:var(--ivory);}
+    [data-theme="light"] .settings-options .opt{background:var(--bg-card);}
+    [data-theme="light"] .settings-timer-input input{background:var(--bg-card);}
+
+    /* 9-2. 음성 배지 */
+    #voice-badge{position:fixed;top:16px;left:50%;transform:translateX(-50%);font-family:var(--font-code);font-size:0.78rem;color:var(--accent);background:rgba(13,27,42,0.88);border:1px solid var(--border);border-radius:20px;padding:4px 14px;opacity:0;transition:opacity 0.3s;z-index:90;pointer-events:none;white-space:nowrap;}
+    #voice-badge.active{opacity:1;}
+    #btn-voice.speaking{border-color:var(--accent);color:var(--ivory);background:rgba(119,141,169,0.15);}
+    #btn-voice.voice-on{border-color:var(--accent);color:var(--accent);}
+
+    /* 10. 반응형 */
+    @media(max-width:600px){.grid-2,.grid-3{grid-template-columns:1fr;}.stat-row{gap:10px;}.content.wide{max-width:100%;}.smoke-row{flex-wrap:wrap;}}
+
+    /* 11. 인쇄 */
+    @media print{*{animation:none!important;transition:none!important;}html,body{width:100%;height:auto;overflow:visible;background:white!important;color:#1a1a1a!important;}#deck{position:static;}.slide{position:relative!important;opacity:1!important;transform:none!important;pointer-events:auto!important;page-break-after:always;min-height:100vh;background:white!important;padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;}.slide:last-child{page-break-after:avoid;}#ui-bar,#progress-wrap,#timer,#minimap,#autoplay-badge,#settings-panel,.speaker-note,.nav-btn,#hint{display:none!important;}.fragment{opacity:1!important;transform:none!important;}h1,h2{color:#1a1a1a!important;}.subtitle,.slide-label{color:#666!important;}.bullet-list li,.card-body,td{color:#333!important;}.bullet-list li::before{color:#888!important;}strong{color:#1a1a1a!important;}.card,.stat-box{border-color:#ddd!important;background:#f9f9f6!important;box-shadow:none!important;}.stat-num{color:#333!important;}.summary-quote{background:#f5f5f0!important;border-left-color:#888!important;color:#333!important;}.data-table th{background:#f0f0f0!important;color:#333!important;}.data-table td{border-bottom-color:#ddd!important;}[class*="slide-"]{background:white!important;}}
+  </style>
+</head>
+
+<body data-transition="fade" data-reveal="all-at-once" data-theme="dark" data-color-theme="navy-denim">
+<div id="deck">
+
+<!-- 슬라이드 1: 타이틀 -->
+<div class="slide slide-0 active" role="region" aria-label="슬라이드 1">
+  <div class="content" style="text-align:center;">
+    <div class="title-tag fragment">2026 · 일반 시민 안전교육</div>
+    <h1 class="fragment" style="font-size:clamp(2.6rem,6.5vw,4rem);">⏱ 10분 안에 판단하라</h1>
+    <p class="subtitle fragment mt-md">일반 시민을 위한 재난 대피 강의</p>
+    <p class="fragment mt-lg" style="font-size:1.1rem;color:var(--accent);">문종욱</p>
+  </div>
+</div>
+
+<!-- 슬라이드 2: 목차 -->
+<div class="slide slide-1" role="region" aria-label="슬라이드 2">
+  <div class="content">
+    <p class="slide-label fragment">CONTENTS</p>
+    <h2 class="fragment">오늘 배울 내용</h2>
+    <div class="divider fragment"></div>
+    <div class="grid-2 mt-md fragment">
+      <div class="card"><div class="card-title"><span class="text-accent">01</span>&nbsp; 왜 안내방송을 다 믿으면 안 되나</div><div class="card-body">거대 참사의 공통점 · 위기 시 인간의 본능</div></div>
+      <div class="card"><div class="card-title"><span class="text-accent">02</span>&nbsp; 화재 — 10분 안에 탈출하라</div><div class="card-body">산소·연기의 속도 · 대피 요령 · 준비물</div></div>
+      <div class="card"><div class="card-title"><span class="text-accent">03</span>&nbsp; 지진 — 그 자리에서 견뎌라</div><div class="card-body">한반도 지진 위험 · 내진/제진/면진 · 위치별 대피</div></div>
+      <div class="card"><div class="card-title"><span class="text-accent">04</span>&nbsp; 결론 — 상황별 의사결정</div><div class="card-body">화재는 탈출, 지진은 견딤 · 가족 역할 분담</div></div>
+    </div>
+    <div class="tip-box fragment mt-md"><span class="tip-icon">💡</span> <strong>핵심 수칙</strong> &nbsp;화재와 지진은 정반대로 행동해야 합니다. 어떤 상황인지 먼저 판단하세요.</div>
+  </div>
+</div>
+
+<!-- 슬라이드 3: PART 01 구분 -->
+<div class="slide slide-2" role="region" aria-label="슬라이드 3">
+  <div class="content part-slide">
+    <p class="part-num fragment">P A R T &nbsp; 0 1</p>
+    <h1 class="part-title fragment" style="color:#FB8C00;">왜 안내방송을<br>다 믿으면 안 되나</h1>
+    <p class="part-sub fragment">거대 참사의 공통점과 인간의 본능</p>
+  </div>
+</div>
+
+<!-- 슬라이드 4: 거대 참사의 공통점 -->
+<div class="slide slide-3" role="region" aria-label="슬라이드 4">
+  <div class="content">
+    <p class="slide-label fragment">PART 1 · 위기 신호</p>
+    <h2 class="fragment">거대 참사의 공통점</h2>
+    <p class="subtitle fragment mt-sm">대형 참사 직전에는 종종 <strong class="text-red">"기다려라"</strong>는 안내가 흘러나옵니다.<br>그러나 그 안내가 항상 옳은 것은 아닙니다.</p>
+    <div class="case-box fragment mt-md"><div class="case-tag">대구 지하철 (2003)</div><div class="case-text">"열차가 곧 출발하오니 잠시만 기다려 주시길 바랍니다."</div></div>
+    <div class="case-box fragment"><div class="case-tag">건물 붕괴 사고 (사례)</div><div class="case-text">전날부터 진동 소리, 식당가 콘크리트 천장 슬래브 균열 등의 전조 — 그러나 안내는 없거나 늦었습니다.</div></div>
+    <div class="case-box fragment"><div class="case-tag">세월호 침몰 (2014)</div><div class="case-text">"객실 안에서 대기해 주십시오."</div></div>
+    <div class="tip-box fragment mt-sm"><span class="tip-icon">💡</span> 안내방송이 상황을 가장 잘 아는 것은 아닙니다. <strong>자기 감각도 함께 작동시키세요.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 5: 인간의 본능 3가지 -->
+<div class="slide slide-4" role="region" aria-label="슬라이드 5">
+  <div class="content">
+    <p class="slide-label fragment">PART 1 · 본능의 함정</p>
+    <h2 class="fragment">위기 시 인간의 본능 3가지</h2>
+    <p class="subtitle fragment mt-sm">급할 때 사람은 <strong class="text-red">본능적으로 행동</strong>합니다. 그러나 본능은 종종 위험으로 이끕니다.</p>
+    <div class="grid-3 mt-md fragment">
+      <div class="card text-center"><div style="font-size:2.8rem;margin-bottom:10px;">🏠</div><div class="card-title" style="font-size:1.35rem;">귀소본능</div><div class="card-body" style="font-size:1.1rem;">왔던 길을<br>다시 찾아간다</div></div>
+      <div class="card text-center"><div style="font-size:2.8rem;margin-bottom:10px;">💡</div><div class="card-title" style="font-size:1.35rem;">지광본능</div><div class="card-body" style="font-size:1.1rem;">밝은 곳으로<br>찾아간다</div></div>
+      <div class="card text-center"><div style="font-size:2.8rem;margin-bottom:10px;">👥</div><div class="card-title" style="font-size:1.35rem;">추종본능</div><div class="card-body" style="font-size:1.1rem;">처음 행동한 사람을<br>따라간다</div></div>
+    </div>
+    <div class="tip-box fragment mt-md"><span class="tip-icon">💡</span> 급하면 아무 생각이 안 납니다. 그래서 <strong>평소에 가족·동료와 역할을 정해놓아야</strong> 합니다.</div>
+  </div>
+</div>
+
+<!-- 슬라이드 6: PART 02 구분 -->
+<div class="slide slide-5" role="region" aria-label="슬라이드 6">
+  <div class="content part-slide">
+    <p class="part-num fragment">P A R T &nbsp; 0 2</p>
+    <h1 class="part-title fragment" style="color:var(--red);">화재<br>10분 안에 탈출하라</h1>
+    <p class="part-sub fragment">산소·연기·시간의 싸움</p>
+  </div>
+</div>
+
+<!-- 슬라이드 7: 왜 10분인가 -->
+<div class="slide slide-6" role="region" aria-label="슬라이드 7">
+  <div class="content">
+    <p class="slide-label fragment">PART 2 · 왜 10분인가</p>
+    <h2 class="fragment">화재 시 결정 시간 — <span class="text-red">10분</span></h2>
+    <p class="subtitle fragment mt-sm">밀폐된 공간에서 불이 나면, <strong class="text-red">산소는 빠르게 줄고 연기는 빠르게 찹니다.</strong></p>
+    <div class="danger-bar fragment mt-md">
+      <div class="danger-seg" style="background:#43A047;flex:2.5;"><strong>21~18%</strong><small>긴급 탈출 가능</small></div>
+      <div class="danger-seg" style="background:#FDD835;color:#333;flex:1.5;"><strong>16~14%</strong><small>두통·현기증</small></div>
+      <div class="danger-seg" style="background:#FB8C00;flex:1.5;"><strong>12~10%</strong><small>의식 불명</small></div>
+      <div class="danger-seg" style="background:#E53935;flex:1;"><strong>8~7%</strong><small>7~8분 내 사망</small></div>
+      <div class="danger-seg" style="background:#B71C1C;flex:0.8;"><strong>≤6%</strong><small>6분 내 사망</small></div>
+    </div>
+    <p class="fragment mt-md text-lg" style="color:var(--ivory-dim);">소방청 화재 현장 도착 골든타임은 <strong class="text-accent">7분</strong>이지만, 도심·교통체증 시 더 걸릴 수 있습니다.<br><strong class="text-red">10분</strong>은 시민이 스스로 판단하고 행동해야 하는 마지노선입니다.</p>
+    <div class="tip-box fragment mt-sm"><span class="tip-icon">💡</span> 10분은 외부의 도움이 도착할 때까지 <strong>스스로 살아남아야 하는 시간</strong>입니다.</div>
+  </div>
+</div>
+
+<!-- 슬라이드 8: 연기의 속도 -->
+<div class="slide slide-7" role="region" aria-label="슬라이드 8">
+  <div class="content">
+    <p class="slide-label fragment">PART 2 · 연기의 속도</p>
+    <h2 class="fragment">밀폐공간에서 연기는 이렇게 찹니다</h2>
+    <p class="subtitle fragment mt-sm">방·사무실 같은 <strong class="text-red">밀폐된 공간</strong>에서 연기는 1분이면 천장을 덮고, 5분이면 절반, 10분이면 거의 가득 찹니다.</p>
+    <div class="smoke-row mt-lg fragment">
+      <div><div class="smoke-box"><div class="room" style="background:#333;"></div><div class="smoke-fill" style="height:15%;background:rgba(120,120,120,0.7);"></div><div class="fire">🔥</div></div><div class="smoke-box label" style="height:auto;border:none;">1분 경과</div></div>
+      <div><div class="smoke-box"><div class="room" style="background:#333;"></div><div class="smoke-fill" style="height:40%;background:rgba(100,100,100,0.8);"></div><div class="fire">🔥</div></div><div class="smoke-box label" style="height:auto;border:none;">3분 경과</div></div>
+      <div><div class="smoke-box"><div class="room" style="background:#333;"></div><div class="smoke-fill" style="height:60%;background:rgba(80,80,80,0.85);"></div><div class="fire">🔥</div></div><div class="smoke-box label" style="height:auto;border:none;">5분 경과</div></div>
+      <div><div class="smoke-box"><div class="room" style="background:#333;"></div><div class="smoke-fill" style="height:90%;background:rgba(50,50,50,0.9);"></div><div class="fire">🔥</div></div><div class="smoke-box label" style="height:auto;border:none;">10분 경과</div></div>
+    </div>
+    <div class="tip-box fragment mt-md"><span class="tip-icon">💡</span> 연기는 위에서 아래로 찹니다. <strong>낮은 자세를 유지하면 호흡 가능한 공기를 더 오래 쓸 수 있습니다.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 9: 산소 농도 표 -->
+<div class="slide slide-8" role="region" aria-label="슬라이드 9">
+  <div class="content wide">
+    <p class="slide-label fragment">PART 2 · 산소와 신체</p>
+    <h2 class="fragment">산소 농도가 떨어지면 몸에 일어나는 일</h2>
+    <p class="subtitle fragment mt-sm">정상 대기 — <strong class="text-accent">산소 21%, 질소 79%.</strong> 화재 연기 속에서는 이 비율이 빠르게 무너집니다.</p>
+    <table class="data-table fragment mt-md">
+      <thead><tr><th>산소 농도</th><th>인체 반응</th><th>생존 시간</th></tr></thead>
+      <tbody>
+        <tr><td><strong style="color:#43A047;">21 ~ 18%</strong></td><td>정상 — 긴급 탈출 가능</td><td>충분</td></tr>
+        <tr><td><strong style="color:#FDD835;">16 ~ 14%</strong></td><td>두통, 맥박 증가, 현기증, 구역질</td><td>제한적</td></tr>
+        <tr><td><strong style="color:#FB8C00;">12 ~ 10%</strong></td><td>의식 불명, 구토와 실신</td><td>매우 제한적</td></tr>
+        <tr><td><strong style="color:#E53935;">8 ~ 7%</strong></td><td>중추신경 마비</td><td>7~8분 내 사망</td></tr>
+        <tr><td><strong style="color:#B71C1C;">6% 이하</strong></td><td>즉각적 의식 소실</td><td>6분 내 사망</td></tr>
+      </tbody>
+    </table>
+    <p class="fragment mt-sm" style="font-size:0.9rem;color:var(--ivory-dim);">※ 출처: 한국산업안전보건공단(KOSHA) / 미국 NFPA·OSHA 산소결핍 기준</p>
+    <div class="tip-box fragment mt-sm"><span class="tip-icon">💡</span> 산소가 16% 이하로 떨어지면 이미 판단력이 흐려집니다. <strong>그 전에 결정해야 합니다.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 10: 대피 방향 -->
+<div class="slide slide-9" role="region" aria-label="슬라이드 10">
+  <div class="content">
+    <p class="slide-label fragment">PART 2 · 대피 방향</p>
+    <h2 class="fragment">비상벨이 울리면 어디로 가야 하나</h2>
+    <div class="card fragment mt-md" style="border-left:4px solid var(--accent);">
+      <div class="card-title" style="font-size:1.3rem;">① 먼저 코로 확인 — 연기 냄새가 나는가?</div>
+      <div class="card-body mt-sm" style="font-size:1.2rem;">
+        연기 냄새가 <strong style="color:var(--ivory);">안 난다</strong> → <strong style="color:#2196F3;font-size:1.25rem;">지상으로 대피</strong> (계단으로 아래쪽)<br><br>
+        연기 냄새가 <strong class="text-red">난다</strong> → <strong style="color:#FB8C00;font-size:1.25rem;">옥상으로 대피</strong> (연기는 위로 가지만 옥상은 트인 공간)
+      </div>
+    </div>
+    <div class="card fragment mt-md" style="border-left:4px solid var(--accent);">
+      <div class="card-title" style="font-size:1.3rem;">② 어떤 자세로?</div>
+      <div class="card-body mt-sm" style="font-size:1.2rem;">
+        반드시 <strong style="color:var(--ivory);">낮은 자세</strong>로 이동 (연기는 위에서부터 차오름)<br><br>
+        <strong style="color:var(--ivory);">젖은 수건</strong>으로 입과 코를 막고 호흡
+      </div>
+    </div>
+    <div class="tip-box fragment mt-md"><span class="tip-icon">💡</span> <strong class="text-red">엘리베이터는 절대 사용 금지.</strong> 정전·연돌효과로 갇힐 수 있습니다.</div>
+  </div>
+</div>
+
+<!-- 슬라이드 11: 엘리베이터 위치 기억 -->
+<div class="slide slide-10" role="region" aria-label="슬라이드 11">
+  <div class="content">
+    <p class="slide-label fragment">PART 2 · 위치 기억</p>
+    <h2 class="fragment">대피 요령 ① — 엘리베이터 위치를 기억하라</h2>
+    <p class="subtitle fragment mt-sm">건물 내에서 <strong class="text-accent">엘리베이터 주변에는 거의 항상 계단과 화장실</strong>이 함께 배치되어 있습니다.</p>
+    <div class="grid-2 mt-md fragment">
+      <div class="card"><div class="card-title" style="font-size:1.25rem;">왜 엘리베이터인가</div><div class="card-body" style="font-size:1.1rem;">▸ 건물에 들어서면 누구나 가장 먼저 보는 곳<br>▸ 주변에 비상 계단·화장실이 묶여 있음<br>▸ 위치를 한 번 기억하면 잘 잊지 않음</div></div>
+      <div class="card"><div class="card-title" style="font-size:1.25rem;">화재 시 행동</div><div class="card-body" style="font-size:1.1rem;">▸ 엘리베이터는 <strong class="text-red">절대 사용하지 않기</strong><br>▸ 주변 <strong>비상 계단</strong>으로 이동<br>▸ 화장실은 임시 대피처 (배관 많음)</div></div>
+    </div>
+    <div class="tip-box fragment mt-md"><span class="tip-icon">💡</span> 새 건물에 들어가면 <strong>엘리베이터 위치 = 비상 계단 위치</strong>를 함께 확인하세요.</div>
+  </div>
+</div>
+
+<!-- 슬라이드 12: 계단 오르기 체력 -->
+<div class="slide slide-11" role="region" aria-label="슬라이드 12">
+  <div class="content">
+    <p class="slide-label fragment">PART 2 · 체력</p>
+    <h2 class="fragment">대피 요령 ② — 계단 오르기로 체력 단련</h2>
+    <p class="subtitle fragment mt-sm">대피는 결국 <strong class="text-red">다리로 합니다.</strong> 평소에 운동이 안 된 사람은 5층도 못 올라갑니다.</p>
+    <div class="grid-2 mt-md fragment">
+      <div class="compare-good"><div class="compare-label good">✓ 올바른 자세</div><ul class="bullet-list"><li>등을 곧게 펴고</li><li>발바닥 전체로 착지</li><li>무릎을 가볍게 굽혀 충격 흡수</li><li>정면을 향한 자세로 서둘러 걷기</li></ul></div>
+      <div class="compare-bad"><div class="compare-label bad">✗ 잘못된 자세</div><ul class="bullet-list"><li>상체가 너무 구부러진 자세</li><li>발끝부터 착지하면 무릎 부담 큼</li><li>무릎을 편 채 착지 — 충격 그대로 전달</li><li>뒷발의 앞꿈치가 계단 밖으로 빠짐</li></ul></div>
+    </div>
+    <div class="tip-box fragment mt-md"><span class="tip-icon">💡</span> 평소 계단 이용 = 운동 + 대피 훈련. <strong>연기보다 빨라야 살 수 있습니다.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 13: 집안 준비물 -->
+<div class="slide slide-12" role="region" aria-label="슬라이드 13">
+  <div class="content">
+    <p class="slide-label fragment">PART 2 · 가정 준비</p>
+    <h2 class="fragment">대피 요령 ③ — 집안 필수 준비물</h2>
+    <p class="subtitle fragment mt-sm">위급할 때 가장 큰 차이를 만드는 건 <strong class="text-accent">준비물</strong>입니다. 평소에 한 곳에 모아두세요.</p>
+    <div class="grid-3 mt-md fragment">
+      <div class="card text-center"><div style="font-size:2.8rem;margin-bottom:10px;">🧻</div><div class="card-title" style="font-size:1.25rem;">젖은 수건</div><div class="card-body" style="font-size:1.05rem;">연기 흡입을 막는<br>1차 호흡 보호구</div><div style="color:var(--accent);font-size:0.95rem;margin-top:8px;">예시: 자녀가 담당</div></div>
+      <div class="card text-center"><div style="font-size:2.8rem;margin-bottom:10px;">🪢</div><div class="card-title" style="font-size:1.25rem;">로프</div><div class="card-body" style="font-size:1.05rem;">고층에서 저층으로<br>이동·구조 신호</div><div style="color:var(--accent);font-size:0.95rem;margin-top:8px;">예시: 부모가 담당</div></div>
+      <div class="card text-center"><div style="font-size:2.8rem;margin-bottom:10px;">📰</div><div class="card-title" style="font-size:1.25rem;">신문지·테이프</div><div class="card-body" style="font-size:1.05rem;">문틈 막아 연기 차단<br>비상시 횃불용</div><div style="color:var(--accent);font-size:0.95rem;margin-top:8px;">예시: 공동 담당</div></div>
+    </div>
+    <div class="tip-box fragment mt-md"><span class="tip-icon">💡</span> 준비물은 <strong>"현관 신발장 옆 비상가방"</strong> 같은 한 장소에 모아두세요.</div>
+  </div>
+</div>
+
+<!-- 슬라이드 14: 소화기 사용법 -->
+<div class="slide slide-13" role="region" aria-label="슬라이드 14">
+  <div class="content">
+    <p class="slide-label fragment">PART 2 · 초기 진압</p>
+    <h2 class="fragment">소화기 사용법 — 4단계</h2>
+    <div class="grid-3 mt-md fragment">
+      <div class="card text-center" style="border-top:3px solid var(--red);"><div style="font-size:2.5rem;color:var(--ivory-dim);">①</div><div class="card-title text-red" style="font-size:1.35rem;">손잡이</div><div class="card-body" style="font-size:1.1rem;">안전핀을<br>뽑는다</div></div>
+      <div class="card text-center" style="border-top:3px solid var(--red);"><div style="font-size:2.5rem;color:var(--ivory-dim);">②</div><div class="card-title text-red" style="font-size:1.35rem;">호스</div><div class="card-body" style="font-size:1.1rem;">불 쪽으로<br>겨눈다</div></div>
+      <div class="card text-center" style="border-top:3px solid var(--red);"><div style="font-size:2.5rem;color:var(--ivory-dim);">③</div><div class="card-title text-red" style="font-size:1.35rem;">손잡이</div><div class="card-body" style="font-size:1.1rem;">힘껏<br>움켜쥔다</div></div>
+    </div>
+    <div class="card fragment mt-md" style="border-left:4px solid var(--accent);">
+      <div class="card-title" style="font-size:1.25rem;">④ 분사 자세</div>
+      <div class="card-body" style="font-size:1.15rem;">불의 <strong style="color:var(--ivory);">밑부분(연료)</strong>을 향해 빗자루 쓸 듯 좌우로 분사합니다. 불꽃 위쪽을 쏘면 안 됩니다.</div>
+    </div>
+    <p class="fragment mt-sm" style="font-size:0.95rem;color:var(--ivory-dim);">※ 소화기 유효기간은 보통 10년. 압력계 바늘이 녹색 영역에 있어야 정상입니다.</p>
+    <div class="tip-box fragment mt-sm"><span class="tip-icon">💡</span> 소화기로 못 끄는 불(천장까지 번진 불)이면 <strong>즉시 대피하세요.</strong> 진압보다 생명이 우선입니다.</div>
+  </div>
+</div>
+
+<!-- 슬라이드 15: PART 03 구분 -->
+<div class="slide slide-14" role="region" aria-label="슬라이드 15">
+  <div class="content part-slide">
+    <p class="part-num fragment">P A R T &nbsp; 0 3</p>
+    <h1 class="part-title fragment" style="color:#43A047;">지진<br>그 자리에서 견뎌라</h1>
+    <p class="part-sub fragment">한반도는 더 이상 안전지대가 아닙니다</p>
+  </div>
+</div>
+
+<!-- 슬라이드 16: 한반도 지진 역사 -->
+<div class="slide slide-15" role="region" aria-label="슬라이드 16">
+  <div class="content">
+    <p class="slide-label fragment">PART 3 · 역사 기록</p>
+    <h2 class="fragment">한반도는 지진 안전지대가 아니다</h2>
+    <p class="subtitle fragment mt-sm">『삼국사기』·『조선왕조실록』에는 한반도 지진 피해 기록이 <strong class="text-accent">수백 건</strong> 남아 있습니다.</p>
+    <div class="timeline mt-md fragment">
+      <div class="timeline-item"><div class="timeline-year">304년 9월 — 『삼국사기』</div><div class="timeline-text">"경주의 땅이 흔들려 민옥(民屋)이 넘어지고 죽은 자가 있었다."</div></div>
+      <div class="timeline-item"><div class="timeline-year">779년 3월 — 신라 혜공왕 15년</div><div class="timeline-text">"경주에 지진이 나서 백성들의 집이 무너지고 죽은 사람이 100명이 넘었다."</div></div>
+      <div class="timeline-item"><div class="timeline-year">2016 경주 / 2017 포항</div><div class="timeline-text">규모 5.8(경주) · 5.4(포항). 1978년 기상청 관측 이후 최대 규모.</div></div>
+    </div>
+    <div class="tip-box fragment mt-sm"><span class="tip-icon">💡</span> "우리나라는 지진이 없다"는 옛말입니다. <strong>평소에 행동요령을 알아둬야 합니다.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 17: 지진 위험 지역 -->
+<div class="slide slide-16" role="region" aria-label="슬라이드 17">
+  <div class="content">
+    <p class="slide-label fragment">PART 3 · 위험 지역</p>
+    <h2 class="fragment">국가 지진 위험도 — 어디가 위험한가</h2>
+    <p class="subtitle fragment mt-sm">기상청 <strong class="text-accent">국가지진위험지도</strong>(2013 작성, 2017 포항지진 후 재검토 진행)</p>
+    <div class="grid-3 mt-md fragment">
+      <div class="card text-center" style="border-top:3px solid var(--red);"><div style="font-size:2.5rem;margin-bottom:8px;">🌋</div><div class="card-title text-red" style="font-size:1.3rem;">동남권</div><div class="card-body" style="font-size:1.1rem;">울산·경주·포항<br>양산단층대</div></div>
+      <div class="card text-center" style="border-top:3px solid #FB8C00;"><div style="font-size:2.5rem;margin-bottom:8px;">⛰️</div><div class="card-title" style="color:#FB8C00;font-size:1.3rem;">평양 주변</div><div class="card-body" style="font-size:1.1rem;">한반도 북서부<br>역사 지진 다수</div></div>
+      <div class="card text-center" style="border-top:3px solid #FDD835;"><div style="font-size:2.5rem;margin-bottom:8px;">🗺️</div><div class="card-title" style="color:#FDD835;font-size:1.3rem;">기타</div><div class="card-body" style="font-size:1.1rem;">충청·강원 일부<br>중간 위험권역</div></div>
+    </div>
+    <div class="tip-box fragment mt-md"><span class="tip-icon">💡</span> <strong>내가 사는 지역의 위험 등급을 한 번 확인해 두세요.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 18: 내진·제진·면진 -->
+<div class="slide slide-17" role="region" aria-label="슬라이드 18">
+  <div class="content">
+    <p class="slide-label fragment">PART 3 · 건물 구조</p>
+    <h2 class="fragment">내진 · 제진 · 면진 — 무엇이 다른가</h2>
+    <div class="grid-3 mt-md fragment">
+      <div class="card" style="border-top:3px solid #2196F3;"><div class="card-title" style="font-size:1.25rem;">① 내진 구조</div><div class="card-body" style="font-size:1.05rem;"><strong style="color:var(--ivory);">건물을 튼튼하게.</strong> 철근 콘크리트로 벽·기둥을 강화. 가장 기본적인 방식.</div></div>
+      <div class="card" style="border-top:3px solid #FB8C00;"><div class="card-title" style="font-size:1.25rem;">② 제진 구조</div><div class="card-body" style="font-size:1.05rem;"><strong style="color:var(--ivory);">흔들림을 줄임.</strong> 건물에 감쇠 장치(댐퍼)를 설치해 진동 에너지를 흡수. 고층에 적용.</div></div>
+      <div class="card" style="border-top:3px solid #43A047;"><div class="card-title" style="font-size:1.25rem;">③ 면진 구조</div><div class="card-body" style="font-size:1.05rem;"><strong style="color:var(--ivory);">땅과 건물을 분리.</strong> 기초에 지진 격리장치를 두어 지진력 자체를 차단. 가장 효과적.</div></div>
+    </div>
+    <p class="fragment mt-md text-lg" style="color:var(--ivory-dim);">흥미롭게도 신라 시대 <strong class="text-accent">경주 첨성대(7세기)</strong>는 기초 아래 자갈층을 두는 <strong class="text-accent">천년 전 면진 구조</strong>로 알려져 있습니다.</p>
+    <div class="tip-box fragment mt-sm"><span class="tip-icon">💡</span> 내가 사는 건물이 어떤 구조인지 알면 <strong>지진 시 어디로 피해야 할지가 정해집니다.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 19: 내진설계 변천 -->
+<div class="slide slide-18" role="region" aria-label="슬라이드 19">
+  <div class="content">
+    <p class="slide-label fragment">PART 3 · 법규 변천</p>
+    <h2 class="fragment">국내 건축물 내진설계 변천</h2>
+    <p class="subtitle fragment mt-sm">국내 내진설계 기준은 <strong class="text-accent">1988년 처음 도입</strong>된 후 여러 번 강화되어 왔습니다.</p>
+    <div class="timeline mt-md fragment">
+      <div class="timeline-item"><div class="timeline-year">1988 — 최초 시행</div><div class="timeline-text">6층 이상 또는 연면적 10만㎡ 이상</div></div>
+      <div class="timeline-item"><div class="timeline-year">2005 — 확대</div><div class="timeline-text">3층 이상 또는 연면적 1,000㎡ 이상으로 확대</div></div>
+      <div class="timeline-item"><div class="timeline-year">2017.12 — 포항지진 후 강화</div><div class="timeline-text"><strong style="color:var(--ivory);">2층 이상 또는 연면적 200㎡ 이상</strong></div></div>
+      <div class="timeline-item"><div class="timeline-year">2018~ — 확대 검토 중</div><div class="timeline-text">단독주택까지 확대 검토 (소규모 건축물 지원)</div></div>
+    </div>
+    <div class="tip-box fragment mt-sm"><span class="tip-icon">💡</span> <strong class="text-red">2017년 12월 이전에 지어진 작은 건물은 내진설계가 안 되어 있을 가능성이 큽니다.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 20: 자가 점검 -->
+<div class="slide slide-19" role="region" aria-label="슬라이드 20">
+  <div class="content">
+    <p class="slide-label fragment">PART 3 · 자가 점검</p>
+    <h2 class="fragment">내가 사는 건물은 어떤가 — 확인하는 법</h2>
+    <ul class="bullet-list mt-md">
+      <li class="fragment"><strong>① 준공 연도를 확인</strong> — 1988년 이전 건물은 내진설계가 없었습니다.</li>
+      <li class="fragment"><strong>② 건축물대장 열람</strong> — 정부24(www.gov.kr)에서 무료 열람 가능. "내진설계 여부" 항목 확인.</li>
+      <li class="fragment"><strong>③ 지자체 내진성능 보강사업</strong> — 노후 건축물 내진보강에 보조금이 있습니다.</li>
+      <li class="fragment"><strong>④ 아파트라면 관리사무소에 문의</strong> — 내진/제진/면진 적용 여부와 보강 이력 확인.</li>
+      <li class="fragment"><strong>⑤ 가구 고정</strong> — 내진설계가 잘 된 건물도 가구가 쓰러지면 다칩니다. 책장·냉장고는 벽에 고정.</li>
+    </ul>
+    <div class="tip-box fragment mt-md"><span class="tip-icon">💡</span> 건물의 안전은 법규만이 아닙니다. <strong>내가 직접 확인하고 보강할 수 있는 부분이 있습니다.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 21: 지진 시 위치별 대피 -->
+<div class="slide slide-20" role="region" aria-label="슬라이드 21">
+  <div class="content">
+    <p class="slide-label fragment">PART 3 · 위치별 대피</p>
+    <h2 class="fragment">지진이 나면 어디로 가야 하나</h2>
+    <div class="card fragment mt-md" style="border-left:4px solid var(--accent);">
+      <div class="card-title" style="font-size:1.25rem;">🏠 아파트 / 주택 안</div>
+      <div class="card-body" style="font-size:1.15rem;">신축 (대피공간 있음) → <strong style="color:#2196F3;">대피공간으로</strong><br>구축 (대피공간 없음) → <strong style="color:#FB8C00;">화장실·욕실로</strong> (배관 많아 상대적으로 튼튼)</div>
+    </div>
+    <div class="card fragment mt-sm" style="border-left:4px solid var(--accent);">
+      <div class="card-title" style="font-size:1.25rem;">🏢 사무실 / 큰 건물 안</div>
+      <div class="card-body" style="font-size:1.15rem;">기둥이 보이면 → <strong style="color:#2196F3;">기둥 옆</strong> (가장 튼튼한 구조)<br>기둥이 안 보이면 → <strong style="color:#FB8C00;">엘리베이터실 옆</strong> 또는 화장실</div>
+    </div>
+    <div class="card fragment mt-sm" style="border-left:4px solid var(--accent);">
+      <div class="card-title" style="font-size:1.25rem;">🚶 건물 밖 / 길거리</div>
+      <div class="card-body" style="font-size:1.15rem;">빌딩가 — 유리·간판 낙하 위험 → <strong style="color:#E53935;">가까운 건물 안으로</strong><br>공원·운동장 — 그대로 <strong style="color:#43A047;">가운데 빈 공간에 머물기</strong></div>
+    </div>
+    <div class="tip-box fragment mt-sm"><span class="tip-icon">💡</span> 지진은 화재와 다릅니다. <strong>도망가지 말고 그 자리에서 가장 튼튼한 위치를 찾으세요.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 22: 지진 오해 - 집 안 -->
+<div class="slide slide-21" role="region" aria-label="슬라이드 22">
+  <div class="content">
+    <p class="slide-label fragment">PART 3 · 흔한 오해</p>
+    <h2 class="fragment">지진 시 흔히 알려진 권고의 함정 — 집 안</h2>
+    <div class="compare-bad fragment mt-md">
+      <div class="compare-label bad">✗ 자주 하는 실수</div>
+      <p style="font-size:1.15rem;color:var(--ivory);line-height:1.6;">"식탁이나 책상 밑이 안 되면, 방석이나 베개로 머리만 보호하고 그 자리에 앉아 있으세요."</p>
+      <p style="font-size:1.05rem;color:var(--ivory-dim);margin-top:8px;">→ 방석은 천장 슬래브나 가구 낙하의 충격을 거의 막지 못합니다.</p>
+    </div>
+    <div class="compare-good fragment mt-md">
+      <div class="compare-label good">✓ 더 안전한 방법</div>
+      <p style="font-size:1.15rem;color:var(--ivory);line-height:1.6;"><strong>욕실/화장실</strong>이 더 안전한 경우가 많습니다.</p>
+      <p style="font-size:1.1rem;color:var(--ivory-dim);margin-top:8px;">① 벽돌·콘크리트가 상대적으로 튼튼<br>② 배관 때문에 철근 사용량이 많음<br>③ 고립되어도 물이 있어 버틸 수 있음</p>
+    </div>
+    <div class="tip-box fragment mt-md"><span class="tip-icon">💡</span> 테이블 밑·방석 머리 보호는 상황에 따라 충분하지 않습니다. <strong>더 튼튼한 공간을 우선하세요.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 23: 지진 오해 - 집 밖 -->
+<div class="slide slide-22" role="region" aria-label="슬라이드 23">
+  <div class="content">
+    <p class="slide-label fragment">PART 3 · 흔한 오해</p>
+    <h2 class="fragment">지진 시 흔히 알려진 권고의 함정 — 집 밖</h2>
+    <div class="compare-bad fragment mt-md">
+      <div class="compare-label bad">✗ 자주 하는 실수</div>
+      <p style="font-size:1.15rem;color:var(--ivory);line-height:1.6;">"지진이 나면 무조건 건물 밖으로 뛰쳐나가세요."</p>
+      <p style="font-size:1.05rem;color:var(--ivory-dim);margin-top:8px;">→ 빌딩가에서는 떨어지는 유리·간판·외벽이 더 위험할 수 있습니다.</p>
+    </div>
+    <div class="compare-good fragment mt-md">
+      <div class="compare-label good">✓ 상황별 더 안전한 방법</div>
+      <p style="font-size:1.15rem;color:var(--ivory);line-height:1.6;"><strong>빌딩 밀집 지역</strong>에서는 오히려 <strong>건물 안으로 들어가는 것</strong>이 더 안전할 수 있습니다.</p>
+      <p style="font-size:1.1rem;color:var(--ivory-dim);margin-top:8px;"><strong>공원·광장</strong> 등 빈 공간이 가까이 있으면 그쪽으로 이동하세요.<br><strong>전봇대·간판·담벼락</strong>에서는 멀리 떨어지세요.</p>
+    </div>
+    <div class="tip-box fragment mt-md"><span class="tip-icon">💡</span> "무조건 밖으로"는 옛 권고입니다. <strong>주변 환경을 먼저 보고 판단하세요.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 24: PART 04 구분 -->
+<div class="slide slide-23" role="region" aria-label="슬라이드 24">
+  <div class="content part-slide">
+    <p class="part-num fragment">P A R T &nbsp; 0 4</p>
+    <h1 class="part-title fragment" style="color:var(--accent);">결론<br>10분 안에 판단하라</h1>
+    <p class="part-sub fragment">상황별로 행동이 다릅니다</p>
+  </div>
+</div>
+
+<!-- 슬라이드 25: 화재 vs 지진 결론 -->
+<div class="slide slide-24" role="region" aria-label="슬라이드 25">
+  <div class="content">
+    <p class="slide-label fragment">결론</p>
+    <h2 class="fragment">화재와 지진은 정반대로 행동합니다</h2>
+    <div style="display:flex;gap:16px;align-items:center;margin-top:24px;" class="fragment">
+      <div class="conclusion-card" style="flex:1;border-top:4px solid var(--red);">
+        <div style="font-size:1rem;color:var(--red);font-weight:700;margin-bottom:6px;">🔥 화재가 났다면</div>
+        <h3 style="color:var(--red);">탈출</h3>
+        <p style="font-size:1.1rem;">10분 안에 산소가 부족해지고 연기가 가득 찹니다. 낮은 자세로 비상계단을 통해 지상 또는 옥상으로 이동.</p>
+      </div>
+      <div class="vs-divider" style="flex-shrink:0;">⇄</div>
+      <div class="conclusion-card" style="flex:1;border-top:4px solid #43A047;">
+        <div style="font-size:1rem;color:#43A047;font-weight:700;margin-bottom:6px;">🌍 지진이 났다면</div>
+        <h3 style="color:#43A047;">견딤</h3>
+        <p style="font-size:1.1rem;">이동 중 낙하물이 더 위험합니다. 화장실·기둥 옆 등 가장 튼튼한 곳에서 흔들림이 멈출 때까지 견딥니다.</p>
+      </div>
+    </div>
+    <div class="tip-box fragment mt-lg"><span class="tip-icon">💡</span> 10분은 외부 도움이 도착할 때까지 <strong>스스로 판단·행동해야 하는 시간</strong>입니다.</div>
+  </div>
+</div>
+
+<!-- 슬라이드 26: 오늘 기억하실 5가지 -->
+<div class="slide slide-25" role="region" aria-label="슬라이드 26">
+  <div class="content">
+    <p class="slide-label fragment">마무리</p>
+    <h2 class="fragment">오늘 꼭 기억하실 5가지</h2>
+    <ul class="bullet-list mt-md">
+      <li class="fragment" style="font-size:1.25rem;"><strong>1</strong> &nbsp;안내방송이 다 옳지는 않습니다. <strong>자기 감각</strong>(연기 냄새, 진동)도 함께 작동시키세요.</li>
+      <li class="fragment" style="font-size:1.25rem;"><strong>2</strong> &nbsp;화재는 <strong class="text-red">10분 안에 탈출.</strong> 낮은 자세, 젖은 수건, 비상계단. 엘리베이터는 절대 금지.</li>
+      <li class="fragment" style="font-size:1.25rem;"><strong>3</strong> &nbsp;지진은 <strong style="color:#43A047;">그 자리에서 견딤.</strong> 화장실·기둥 옆이 가장 튼튼합니다.</li>
+      <li class="fragment" style="font-size:1.25rem;"><strong>4</strong> &nbsp;<strong>가족 역할을 미리 정해두기.</strong> 누가 무엇을 챙길지 정해두면 위기 시 망설이지 않습니다.</li>
+      <li class="fragment" style="font-size:1.25rem;"><strong>5</strong> &nbsp;<strong>내 건물·내 동네를 알아두기.</strong> 비상계단 위치, 준공 연도, 가까운 대피소 한 번씩 확인하세요.</li>
+    </ul>
+    <div class="tip-box fragment mt-lg"><span class="tip-icon">💡</span> <strong style="font-size:1.2rem;">평소의 5분이 위급할 때의 10분을 좌우합니다.</strong></div>
+  </div>
+</div>
+
+<!-- 슬라이드 27: 감사합니다 -->
+<div class="slide slide-26" role="region" aria-label="슬라이드 27">
+  <div class="content" style="text-align:center;">
+    <div style="font-size:3.5rem;margin-bottom:18px;" class="fragment">🙏</div>
+    <h1 class="fragment" style="font-size:clamp(2.6rem,6.5vw,4rem);">감사합니다</h1>
+    <p class="subtitle fragment mt-md" style="font-size:1.2rem;">여러분과 가족의 안전을 응원합니다</p>
+    <p class="fragment mt-lg" style="font-size:1.1rem;color:var(--accent);font-weight:700;">문종욱</p>
+    <p class="fragment mt-md" style="font-size:0.9rem;color:var(--ivory-dim);">참고: 행정안전부 · 소방청 · 기상청 · KOSHA 공식 자료</p>
+  </div>
+</div>
+
+</div><!-- /#deck -->
+
+<!-- 진행바 -->
+<div id="progress-wrap"><div id="progress-bar"></div></div>
+<!-- 타이머 -->
+<div id="timer">00:00</div>
+<!-- 자동넘김 -->
+<div id="autoplay-badge">▶ AUTO</div>
+<!-- 미니맵 -->
+<div id="minimap" role="dialog" aria-label="슬라이드 목차"><div class="minimap-grid"></div></div>
+
+<!-- 하단 UI 바 -->
+<div id="ui-bar" role="navigation" aria-label="슬라이드 네비게이션">
+  <div id="slide-counter"><span id="cur">1</span> / <span id="total">27</span></div>
+  <div>
+    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">← 이전</button>
+    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">다음 →</button>
+    <button class="nav-btn" id="btn-voice" aria-label="음성 켜기/끄기" title="V키 · 음성 ON/OFF">🔊 음성</button>
+    <button class="nav-btn" id="btn-voice-pause" aria-label="일시정지/재생" title="P키 · 일시정지/재생" style="display:none;">⏸ 정지</button>
+    <button class="nav-btn" id="btn-fs" aria-label="전체화면">F 전체화면</button>
+    <button class="nav-btn" id="btn-settings" aria-label="설정 열기">⚙</button>
+  </div>
+  <div id="hint">← → Space · V 음성 · P 정지 · S 설정</div>
+</div>
+<!-- 음성 재생 상태 배지 -->
+<div id="voice-badge"></div>
+
+<!-- 설정 패널 -->
+<div id="settings-panel" role="dialog" aria-label="프레젠테이션 설정">
+  <div class="settings-header"><span>⚙ 프레젠테이션 설정</span><button id="settings-close">✕</button></div>
+  <div class="settings-group"><div class="settings-label">컬러 테마</div><div class="settings-options" data-setting="color-theme"><button class="opt" data-value="gold"><span class="theme-dot" style="background:#C6A55C"></span> 골드</button><button class="opt" data-value="slate-rose"><span class="theme-dot" style="background:#84828F"></span> 슬레이트</button><button class="opt active" data-value="navy-denim"><span class="theme-dot" style="background:#778DA9"></span> 데님</button><button class="opt" data-value="forest-teal"><span class="theme-dot" style="background:#84A98C"></span> 포레스트</button><button class="opt" data-value="cyber-teal"><span class="theme-dot" style="background:#5BC0BE"></span> 사이버</button></div></div>
+  <div class="settings-group"><div class="settings-label">전환 효과</div><div class="settings-options" data-setting="transition"><button class="opt active" data-value="fade">페이드</button><button class="opt" data-value="slide-h">좌우</button><button class="opt" data-value="slide-v">상하</button><button class="opt" data-value="none">없음</button></div></div>
+  <div class="settings-group"><div class="settings-label">콘텐츠 등장</div><div class="settings-options" data-setting="reveal"><button class="opt active" data-value="all-at-once">한번에</button><button class="opt" data-value="by-element">요소별</button><button class="opt" data-value="by-group">그룹별</button></div></div>
+  <div class="settings-group"><div class="settings-label">테마</div><div class="settings-options" data-setting="theme"><button class="opt active" data-value="dark">다크</button><button class="opt" data-value="light">라이트</button></div></div>
+  <div class="settings-group"><div class="settings-label">자동 넘김</div><div class="settings-options" data-setting="autoplay"><button class="opt active" data-value="off">수동</button><button class="opt" data-value="5">자동 (5초)</button></div></div>
+  <div class="settings-group"><div class="settings-label">타이머 목표</div><div class="settings-timer-input"><input type="number" id="timer-goal-input" min="0" max="120" value="0" /><span>분 (0 = 제한 없음)</span></div></div>
+</div>
+
+<script>
+/* ===== 1. 핵심 변수 ===== */
+const slides=document.querySelectorAll('.slide');
+const TOTAL=slides.length;
+let current=0, isAnimating=false;
+const curEl=document.getElementById('cur');
+const progressBar=document.getElementById('progress-bar');
+const btnPrev=document.getElementById('btn-prev');
+const btnNext=document.getElementById('btn-next');
+
+/* 2. goTo + updateUI */
+function goTo(index){if(isAnimating||index===current)return;if(index<0||index>=TOTAL)return;const transition=document.body.dataset.transition||'fade';const direction=index>current?'next':'prev';isAnimating=true;const prevSlide=slides[current];const nextSlide=slides[index];if(transition==='slide-h'||transition==='slide-v'){const isH=transition==='slide-h';const exitClass=direction==='next'?(isH?'exit-left':'exit-up'):(isH?'exit-right':'exit-down');const enterFrom=direction==='next'?(isH?'translateX(100%)':'translateY(100%)'):(isH?'translateX(-100%)':'translateY(-100%)');nextSlide.style.transition='none';nextSlide.style.transform=enterFrom;nextSlide.classList.add('active');nextSlide.offsetHeight;nextSlide.style.transition='';nextSlide.style.transform='';prevSlide.classList.add(exitClass);setTimeout(()=>{prevSlide.classList.remove('active','exit-left','exit-right','exit-up','exit-down');prevSlide.style.transform='';isAnimating=false;},500);}else{prevSlide.classList.remove('active');nextSlide.classList.add('active');setTimeout(()=>{isAnimating=false;},transition==='none'?50:500);}current=index;updateUI();onSlideEnter(current,direction);history.pushState(null,'','#slide-'+(current+1));setTimeout(()=>speakSlide(current),300);}
+function updateUI(){curEl.textContent=current+1;progressBar.style.width=((current+1)/TOTAL*100)+'%';btnPrev.disabled=current===0;btnNext.disabled=current===TOTAL-1;}
+
+/* 3. Fragment */
+let fragmentIndex=[];
+function initFragments(){slides.forEach((_,i)=>{fragmentIndex[i]=0;});}
+function getFragments(si){return slides[si].querySelectorAll('.fragment');}
+function advanceFragment(){if(isAnimating)return false;const reveal=document.body.dataset.reveal||'all-at-once';if(reveal==='all-at-once')return false;const frags=getFragments(current);if(fragmentIndex[current]<frags.length){frags[fragmentIndex[current]].classList.add('visible');fragmentIndex[current]++;return true;}return false;}
+function retreatFragment(){if(isAnimating)return false;const reveal=document.body.dataset.reveal||'all-at-once';if(reveal==='all-at-once')return false;if(fragmentIndex[current]>0){fragmentIndex[current]--;const frags=getFragments(current);frags[fragmentIndex[current]].classList.remove('visible');return true;}return false;}
+function resetFragments(si){const frags=getFragments(si);frags.forEach(f=>f.classList.remove('visible'));fragmentIndex[si]=0;}
+function showAllFragments(si){const frags=getFragments(si);frags.forEach(f=>f.classList.add('visible'));fragmentIndex[si]=frags.length;}
+function onSlideEnter(si,direction){const reveal=document.body.dataset.reveal||'all-at-once';if(reveal==='all-at-once')return;if(direction==='prev'){showAllFragments(si);}else{resetFragments(si);}}
+
+/* 4. Navigation */
+function next(){if(advanceFragment())return;goTo(current+1);}
+function prev(){if(retreatFragment())return;goTo(current-1);}
+btnPrev.addEventListener('click',prev);btnNext.addEventListener('click',next);
+let touchStartX=0;
+document.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-touchStartX;if(Math.abs(dx)>50){dx<0?next():prev();}});
+window.addEventListener('popstate',()=>{const m=location.hash.match(/^#slide-(\d+)$/);if(m)goTo(Math.max(0,Math.min(TOTAL-1,parseInt(m[1],10)-1)));});
+
+function toggleFullscreen(){if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(()=>{});}else{document.exitFullscreen();}}
+document.getElementById('btn-fs').addEventListener('click',toggleFullscreen);
+
+function toggleNotes(){document.body.classList.toggle('show-notes');}
+function toggleTheme(){const c=document.body.dataset.theme||'dark';const n=c==='dark'?'light':'dark';document.body.dataset.theme=n;const to=document.querySelector('[data-setting="theme"]');if(to){to.querySelectorAll('.opt').forEach(b=>{b.classList.toggle('active',b.dataset.value===n);});}}
+
+/* Timer */
+let timerRunning=false;let timerStart=0;let timerElapsed=0;let timerGoal=0;let timerInterval=null;const timerEl=document.getElementById('timer');
+function toggleTimer(){if(timerRunning){clearInterval(timerInterval);timerRunning=false;}else{if(timerElapsed===0)timerStart=Date.now();else timerStart=Date.now()-timerElapsed*1000;timerRunning=true;timerEl.classList.add('running');timerInterval=setInterval(updateTimer,1000);}}
+function updateTimer(){timerElapsed=Math.floor((Date.now()-timerStart)/1000);const min=String(Math.floor(timerElapsed/60)).padStart(2,'0');const sec=String(timerElapsed%60).padStart(2,'0');timerEl.textContent=`${min}:${sec}`;if(timerGoal>0&&timerElapsed>=timerGoal){timerEl.classList.add('overtime');}else{timerEl.classList.remove('overtime');}}
+
+/* Minimap */
+const minimapEl=document.getElementById('minimap');const minimapGrid=minimapEl.querySelector('.minimap-grid');
+function buildMinimap(){minimapGrid.innerHTML='';slides.forEach((slide,i)=>{const tile=document.createElement('div');tile.className='minimap-tile'+(i===current?' current':'');const title=slide.querySelector('h1, h2');tile.innerHTML=`<div class="minimap-num">${String(i+1).padStart(2,'0')}</div><div class="minimap-title">${title?title.textContent:'슬라이드 '+(i+1)}</div>`;tile.addEventListener('click',()=>{goTo(i);toggleMinimap();});minimapGrid.appendChild(tile);});}
+function toggleMinimap(){if(minimapEl.classList.contains('open')){minimapEl.classList.remove('open');}else{buildMinimap();minimapEl.classList.add('open');}}
+
+/* Autoplay — 수동/자동 */
+let autoplayInterval=null;
+let autoplayOn=false;
+let autoplaySec=5;
+const autoplayBadge=document.getElementById('autoplay-badge');
+
+function startAutoplay(){
+  if(autoplayInterval) clearInterval(autoplayInterval);
+  autoplayInterval=setInterval(()=>{if(current<TOTAL-1)next();else goTo(0);},autoplaySec*1000);
+  autoplayBadge.textContent=`▶ AUTO ${autoplaySec}s`;
+  autoplayBadge.classList.add('active');
+}
+function stopAutoplay(){
+  if(autoplayInterval){clearInterval(autoplayInterval);autoplayInterval=null;}
+  autoplayBadge.classList.remove('active');
+}
+function setAutoplay(val){
+  if(val==='off'){autoplayOn=false;stopAutoplay();}
+  else{autoplayOn=true;autoplaySec=parseInt(val)||5;startAutoplay();}
+}
+function toggleAutoplay(){autoplayOn?setAutoplay('off'):setAutoplay(autoplaySec);}
+
+/* Keyboard */
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT')return;
+  switch(e.code){
+    case'ArrowRight':case'ArrowDown':case'Space':e.preventDefault();next();break;
+    case'ArrowLeft':case'ArrowUp':e.preventDefault();prev();break;
+    case'PageDown':e.preventDefault();goTo(current+1);break;
+    case'PageUp':e.preventDefault();goTo(current-1);break;
+    case'Home':e.preventDefault();goTo(0);break;
+    case'End':e.preventDefault();goTo(TOTAL-1);break;
+    case'KeyF':toggleFullscreen();break;
+    case'KeyN':toggleNotes();break;
+    case'KeyT':toggleTimer();break;
+    case'KeyM':toggleMinimap();break;
+    case'KeyA':toggleAutoplay();break;
+    case'KeyL':toggleTheme();break;
+    case'KeyV':toggleVoice();break;
+    case'KeyP':togglePause();break;
+    case'KeyS':if(!e.ctrlKey&&!e.metaKey)toggleSettings();break;
+    case'Escape':
+      if(minimapEl.classList.contains('open'))toggleMinimap();
+      else if(settingsPanel.classList.contains('open'))toggleSettings();
+      break;
+  }
+});
+
+/* Settings Panel */
+const settingsPanel=document.getElementById('settings-panel');
+const btnSettings=document.getElementById('btn-settings');
+const settingsClose=document.getElementById('settings-close');
+const timerGoalInput=document.getElementById('timer-goal-input');
+function toggleSettings(){settingsPanel.classList.toggle('open');}
+btnSettings.addEventListener('click',toggleSettings);
+settingsClose.addEventListener('click',toggleSettings);
+settingsPanel.addEventListener('click',(e)=>{if(e.target===settingsPanel)toggleSettings();});
+
+document.querySelectorAll('.settings-options').forEach(group=>{
+  const setting=group.dataset.setting;
+  group.querySelectorAll('.opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      group.querySelectorAll('.opt').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const value=btn.dataset.value;
+      switch(setting){
+        case'transition':document.body.dataset.transition=value;break;
+        case'reveal':document.body.dataset.reveal=value;resetFragments(current);break;
+        case'theme':document.body.dataset.theme=value;break;
+        case'autoplay':setAutoplay(value);break;
+        case'color-theme':
+          if(value==='navy-denim')document.body.removeAttribute('data-color-theme');
+          else document.body.dataset.colorTheme=value;
+          break;
+      }
+    });
+  });
+});
+timerGoalInput.addEventListener('change',()=>{timerGoal=(parseInt(timerGoalInput.value)||0)*60;});
+
+/* ===== TTS 티키타카 — 여성(지수) + 남성(종욱) ===== */
+const talkScript=[
+[{s:'f',t:"안녕하세요, 청취자 여러분! 오늘은 조금 특별한 주제로 찾아왔어요. 10분 안에 판단하라, 재난 대피 특집입니다!"},{s:'m',t:"네, 안녕하세요. 재난안전 전문가 문종욱입니다. 오늘은 화재와 지진, 두 가지 상황에서 어떻게 살아남는지를 말씀드릴 건데요."},{s:'f',t:"10분이라는 시간이 굉장히 짧게 느껴지는데요, 그게 핵심인 거죠?"},{s:'m',t:"맞습니다. 소방차가 도착하기 전까지, 또는 지진이 멈추기 전까지 스스로 판단하고 행동해야 하는 시간이 바로 10분입니다."}],
+[{s:'f',t:"오늘 어떤 내용들을 다루게 되나요?"},{s:'m',t:"크게 세 가지입니다. 첫째, 왜 안내방송을 무조건 믿으면 안 되는지. 둘째, 화재 시 10분 안에 탈출하는 법. 셋째, 지진 시 그 자리에서 견디는 법입니다."},{s:'f',t:"화재는 탈출, 지진은 견딤이군요? 이 두 가지가 완전히 반대라는 게 흥미롭네요."},{s:'m',t:"바로 그게 핵심입니다. 상황을 잘못 판단해서 화재 때 가만히 있거나, 지진 때 뛰쳐나가면 오히려 더 위험해집니다."}],
+[{s:'f',t:"그럼 파트 1, 시작해 볼게요! 왜 안내방송을 다 믿으면 안 되나요?"},{s:'m',t:"네. 대형 참사의 역사를 보면 공통점이 있습니다. 지금부터 그 이야기를 해드리겠습니다."}],
+[{s:'f',t:"거대 참사에 공통점이 있다고 하셨는데, 어떤 공통점인가요?"},{s:'m',t:"놀랍게도 대형 참사 직전에는 거의 항상 기다려라는 안내가 있었습니다. 2003년 대구 지하철 화재 때는 열차가 곧 출발하니 잠시만 기다려 주세요라는 방송이 나왔어요."},{s:'f',t:"어머, 그 상황에서도 기다리라고요? 세월호도 그랬잖아요."},{s:'m',t:"맞습니다. 세월호 침몰 때도 객실 안에서 대기해 주십시오가 반복됐죠."},{s:'f',t:"그럼 안내방송을 아예 무시해야 한다는 건가요?"},{s:'m',t:"그건 아닙니다. 안내방송을 들으면서, 동시에 내 코가 연기 냄새를 맡는지, 발밑이 흔들리는지, 내 감각도 함께 작동시켜야 해요."}],
+[{s:'f',t:"위기 상황에서 침착하게 판단하는 게 쉬운 일이 아니잖아요. 사람들이 본능적으로 반응하지 않나요?"},{s:'m',t:"정확합니다. 위기 시 인간의 본능이 세 가지 있어요. 첫째가 귀소본능, 왔던 길로 돌아가려는 거고요."},{s:'f',t:"아, 처음 들어온 출구로 나가려는 거요?"},{s:'m',t:"맞아요. 근데 그 길이 이미 불길에 막혀 있을 수 있죠. 둘째는 지광본능, 밝은 곳으로 향하는 거예요."},{s:'f',t:"세 번째는요?"},{s:'m',t:"추종본능입니다. 누군가 먼저 움직이면 무조건 따라가는 거예요. 그래서 평소에 가족끼리 역할을 미리 정해두는 게 중요합니다."}],
+[{s:'f',t:"이제 파트 2, 화재 편이네요. 10분 안에 탈출이라는 제목이 좀 무섭기도 해요."},{s:'m',t:"무서울 수 있지만, 알고 있으면 충분히 대피할 수 있습니다. 핵심은 산소와 연기의 속도를 이해하는 거예요."}],
+[{s:'f',t:"왜 하필 10분이에요? 소방차는 더 빨리 오지 않나요?"},{s:'m',t:"소방청 골든타임이 7분이에요. 하지만 도심 교통체증이 있으면 더 걸립니다."},{s:'f',t:"산소가 얼마나 줄어드는 거예요?"},{s:'m',t:"정상이 21퍼센트인데, 16퍼센트 아래로 떨어지면 두통과 현기증이 옵니다. 12퍼센트 아래면 의식을 잃고, 8퍼센트 아래면 7분에서 8분 안에 사망합니다."},{s:'f',t:"그러니까 10분은 스스로 움직여야 하는 시간이군요."},{s:'m',t:"정확합니다."}],
+[{s:'f',t:"연기가 얼마나 빨리 퍼지나요?"},{s:'m',t:"밀폐된 방에서 1분이면 천장이 연기로 덮입니다. 3분이면 절반, 10분이면 거의 가득 차요."},{s:'f',t:"와, 10분이면 방 전체가 연기로 가득 찬다고요?"},{s:'m',t:"그래서 낮은 자세가 중요해요. 연기는 위에서 아래로 채워지니까, 낮게 기어서 이동하면 공기를 더 오래 쓸 수 있습니다."}],
+[{s:'f',t:"가장 주의해야 할 산소 농도 구간이 어디예요?"},{s:'m',t:"16퍼센트에서 14퍼센트 구간이 핵심입니다. 이때부터 판단력이 흐려지기 시작해요. 그런데 본인은 멀쩡하다고 느낄 수 있어요."},{s:'f',t:"자기가 판단력이 떨어진 걸 모른다는 거잖아요."},{s:'m',t:"그래서 연기 냄새가 나기 시작하면 즉시 행동해야 합니다."}],
+[{s:'f',t:"비상벨이 울리면 어디로 가야 하나요?"},{s:'m',t:"먼저 코로 확인하세요. 연기 냄새가 안 나면 계단으로 아래로. 냄새가 난다면 옥상으로 올라가세요."},{s:'f',t:"엘리베이터는요?"},{s:'m',t:"절대 안 됩니다. 정전이 되면 갇히고, 연기가 통로로 빨려 들어가거든요."},{s:'f',t:"낮은 자세로, 젖은 수건으로 입을 막으면서요?"},{s:'m',t:"정확해요. 그게 기본입니다."}],
+[{s:'f',t:"비상 계단 위치를 평소에 어떻게 기억해두면 좋을까요?"},{s:'m',t:"간단해요. 엘리베이터 위치만 기억하세요. 거의 모든 건물에서 엘리베이터 옆에 비상 계단과 화장실이 함께 있거든요."},{s:'f',t:"엘리베이터 옆에 계단이 있다는 걸 기억하면 되는 거군요."},{s:'m',t:"새 건물에 들어갈 때마다 엘리베이터 위치 확인하는 습관만 들이면 충분합니다."}],
+[{s:'f',t:"계단으로 대피한다는 게, 체력이 안 되면 힘들잖아요."},{s:'m',t:"맞아요. 평소에 운동 안 하신 분들은 5층도 뛰어 올라가기 힘들어요."},{s:'f',t:"어떻게 대비해야 하죠?"},{s:'m',t:"평소에 엘리베이터 대신 계단 쓰는 거예요. 운동도 되고, 건물 구조도 익힐 수 있어요. 일석이조입니다."},{s:'f',t:"오늘부터 계단 써야겠네요!"}],
+[{s:'f',t:"집에 비상용으로 뭘 준비해두면 좋을까요?"},{s:'m',t:"세 가지만 기억하세요. 젖은 수건, 로프, 그리고 신문지와 테이프입니다."},{s:'f',t:"신문지와 테이프는 왜요?"},{s:'m',t:"문 틈으로 연기가 들어오는 걸 막을 수 있어요."},{s:'f',t:"가족끼리 누가 뭘 챙길지 미리 정해두면 좋겠네요."},{s:'m',t:"아이는 수건, 어른은 로프와 가방, 이런 식으로 역할을 나눠두면 훨씬 빠르게 움직일 수 있어요."}],
+[{s:'f',t:"소화기 사용법을 모르는 분들이 많더라고요."},{s:'m',t:"4단계예요. 안전핀 뽑고, 호스 겨누고, 손잡이 꽉 쥐고, 불의 밑부분을 좌우로 분사하는 겁니다."},{s:'f',t:"불꽃 위를 쏘는 게 아니라 아래 연료 부분을 쏴야 하는 거죠?"},{s:'m',t:"맞아요. 소화기로 못 끄겠다 싶으면 미련 없이 대피하세요. 진압보다 생명이 중요합니다."}],
+[{s:'f',t:"이제 파트 3, 지진 편이네요. 우리나라에서 지진이 얼마나 위험할까요?"},{s:'m',t:"사실 한반도는 생각보다 지진에서 자유롭지 않습니다."}],
+[{s:'f',t:"한반도 지진 역사가 꽤 오래됐죠?"},{s:'m',t:"삼국사기와 조선왕조실록에 지진 피해 기록이 수백 건 있어요. 779년 신라 때는 경주에서 사망자가 100명이 넘었습니다."},{s:'f',t:"요즘은요?"},{s:'m',t:"2016년 경주 지진이 규모 5.8, 2017년 포항 지진이 5.4였어요. 기상청 관측 이후 최대 규모였습니다."},{s:'f',t:"생각보다 가까운 이야기네요."}],
+[{s:'f',t:"어느 지역이 특히 위험한가요?"},{s:'m',t:"동남권이 가장 위험합니다. 울산, 경주, 포항 일대에 양산단층대가 지나거든요."},{s:'f',t:"수도권은 안전한가요?"},{s:'m',t:"상대적으로 낮은 건 사실이지만, 절대 안전하다고 볼 수는 없어요. 국가지진위험지도를 한 번 찾아보시면 됩니다."}],
+[{s:'f',t:"내진, 제진, 면진, 뭐가 다른 건가요?"},{s:'m',t:"내진은 건물을 튼튼하게, 제진은 댐퍼로 흔들림을 줄이는 거고요. 면진은 땅과 건물 사이에 격리장치를 넣어 지진력을 차단하는 거예요."},{s:'f',t:"면진이 가장 좋은 거네요. 비싸겠죠?"},{s:'m',t:"맞아요. 재미있는 건, 경주 첨성대가 7세기에 이미 자갈층을 이용한 원시 면진 구조를 썼다는 거예요."},{s:'f',t:"천 년 전에 이미 그런 기술을? 놀랍네요!"}],
+[{s:'f',t:"우리나라 건물들은 내진설계가 잘 되어 있나요?"},{s:'m',t:"1988년에야 처음 기준이 생겼어요. 2017년 포항 지진 이후 2층 이상으로 강화됐습니다."},{s:'f',t:"1988년 이전 건물은 내진설계가 없는 건가요?"},{s:'m',t:"그렇습니다. 2017년 12월 이전에 지어진 소규모 건물도 마찬가지예요."}],
+[{s:'f',t:"내가 사는 건물이 안전한지 어떻게 확인하죠?"},{s:'m',t:"정부24 사이트에서 건축물대장을 무료로 열람하세요. 내진설계 여부 항목이 있어요."},{s:'f',t:"아파트는요?"},{s:'m',t:"관리사무소에 문의하시면 됩니다. 그리고 가구 고정도 중요해요. 책장과 냉장고는 벽에 고정하세요."}],
+[{s:'f',t:"지진이 나면 어디로 가야 하나요?"},{s:'m',t:"집 안에서는 화장실이나 욕실로 이동하세요. 배관이 많아 상대적으로 튼튼합니다."},{s:'f',t:"사무실에서는요?"},{s:'m',t:"기둥 옆이 가장 안전합니다."},{s:'f',t:"건물 밖에 있을 때는요?"},{s:'m',t:"빌딩가에서는 유리와 간판이 떨어지니까 오히려 건물 안으로 들어가는 게 나을 수 있어요."}],
+[{s:'f',t:"식탁 밑이 최선이 아닌 경우도 있나요?"},{s:'m',t:"식탁이 튼튼하다면 좋은 선택이에요. 하지만 방석 하나 머리에 얹고 버티는 건 별로 효과가 없어요."},{s:'f',t:"방석이 천장 슬래브 무게를 막을 수는 없으니까요."},{s:'m',t:"그럴 때는 화장실로 이동하는 게 훨씬 낫습니다."}],
+[{s:'f',t:"지진 나면 무조건 밖으로 뛰어나가라는 말, 저도 그렇게 알고 있었거든요."},{s:'m',t:"그건 옛날 권고예요. 빌딩 밀집 지역에서는 외벽과 간판이 우수수 떨어집니다."},{s:'f',t:"오히려 건물 안이 더 안전할 수 있다는 거군요."},{s:'m',t:"상황에 따라서요. 공원이 가까우면 그쪽이 낫고, 전봇대와 담벼락 옆은 절대 피하세요."}],
+[{s:'f',t:"이제 결론 파트네요. 핵심을 정리해 주세요."},{s:'m',t:"화재와 지진은 행동 방향이 정반대라는 것, 그리고 10분 안에 판단해야 한다는 것이에요."}],
+[{s:'f',t:"화재와 지진, 어떻게 다르게 행동해야 하나요?"},{s:'m',t:"화재가 났다면 탈출입니다. 낮은 자세로 비상계단을 통해 이동하세요."},{s:'f',t:"지진이 났다면요?"},{s:'m',t:"견딤입니다. 화장실이나 기둥 옆에서 흔들림이 멈출 때까지 버티세요."},{s:'f',t:"탈출 대 견딤. 이게 핵심이네요."},{s:'m',t:"그리고 둘 다 10분 안에 스스로 결정해야 합니다."}],
+[{s:'f',t:"꼭 기억해야 할 것 다섯 가지로 정리해 주세요."},{s:'m',t:"첫째, 안내방송이 항상 옳지는 않습니다. 내 감각도 함께 쓰세요. 둘째, 화재는 10분 안에 탈출. 낮은 자세, 젖은 수건, 비상계단."},{s:'f',t:"셋째는요?"},{s:'m',t:"지진은 그 자리에서 견딤. 화장실과 기둥 옆이 가장 안전합니다. 넷째, 가족 역할을 미리 정해두세요."},{s:'f',t:"다섯 번째는요?"},{s:'m',t:"내 건물과 내 동네를 알아두세요. 비상계단 위치, 준공 연도, 가까운 대피소를 확인하세요."},{s:'f',t:"평소의 5분이 위급할 때의 10분을 좌우한다는 말이 딱 맞네요!"}],
+[{s:'f',t:"오늘 정말 유익한 시간이었어요. 마지막으로 한 말씀 부탁드려요."},{s:'m',t:"재난은 예고 없이 옵니다. 하지만 준비된 사람에게는 10분이 충분한 시간입니다. 오늘 내용을 가족과 한 번만 더 나눠주세요."},{s:'f',t:"여러분, 오늘도 들어주셔서 감사합니다! 모두 안전하세요!"}],
+];
+
+/* TTS 엔진 — ElevenLabs API */
+const EL_VOICE_F = 'ETPP7D0aZVdEj12Aa7ho'; // 여성 지수
+const EL_VOICE_M = 'ZJCNdZEjYwkOElxugmW2'; // 남성 종욱
+
+let voiceEnabled=false, isSpeaking=false, isPaused=false;
+let talkQueue=[], currentAudio=null;
+const btnVoice=document.getElementById('btn-voice');
+const btnVoicePause=document.getElementById('btn-voice-pause');
+const voiceBadge=document.getElementById('voice-badge');
+
+async function fetchEL(text, voiceId) {
+  const apiKey = window._elApiKey;
+  console.log('[EL] 요청 시작 | voice:', voiceId, '| text:', text.slice(0,20));
+  const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+    method: 'POST',
+    headers: {
+      'xi-api-key': apiKey,
+      'Content-Type': 'application/json',
+      'Accept': 'audio/mpeg'
+    },
+    body: JSON.stringify({
+      text,
+      model_id: 'eleven_multilingual_v2',
+      voice_settings: { stability: 0.5, similarity_boost: 0.75 }
+    })
+  });
+  console.log('[EL] 응답 상태:', res.status);
+  if (!res.ok) {
+    const err = await res.text();
+    console.error('[EL] 오류:', err);
+    throw new Error('EL ' + res.status + ': ' + err);
+  }
+  const blob = await res.blob();
+  console.log('[EL] 오디오 수신:', blob.size, 'bytes');
+  return URL.createObjectURL(blob);
+}
+
+function stopAudio() {
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.src = '';
+    currentAudio = null;
+  }
+  talkQueue = [];
+  isSpeaking = false;
+  isPaused = false;
+  btnVoice.classList.remove('speaking');
+  voiceBadge.classList.remove('active');
+  if (btnVoicePause) btnVoicePause.textContent = '⏸ 정지';
+}
+
+async function speakNext(idx) {
+  if (!voiceEnabled || !talkQueue.length) {
+    isSpeaking = false;
+    btnVoice.classList.remove('speaking');
+    voiceBadge.classList.remove('active');
+    return;
+  }
+  const line = talkQueue.shift();
+  const voiceId = line.s === 'f' ? EL_VOICE_F : EL_VOICE_M;
+  const who = line.s === 'f' ? '🎙️ 지수' : '🎙️ 종욱';
+
+  try {
+    voiceBadge.textContent = `${who} — 슬라이드 ${idx + 1} 로딩 중...`;
+    voiceBadge.classList.add('active');
+    const url = await fetchEL(line.t, voiceId);
+    if (!voiceEnabled) { URL.revokeObjectURL(url); return; }
+
+    const audio = new Audio(url);
+    currentAudio = audio;
+    isSpeaking = true;
+    btnVoice.classList.add('speaking');
+    voiceBadge.textContent = `${who} — 슬라이드 ${idx + 1}`;
+
+    audio.onended = () => {
+      URL.revokeObjectURL(url);
+      currentAudio = null;
+      setTimeout(() => speakNext(idx), 200);
+    };
+    audio.onerror = () => {
+      URL.revokeObjectURL(url);
+      currentAudio = null;
+      speakNext(idx);
+    };
+    audio.play();
+  } catch (e) {
+    console.error('ElevenLabs 오류:', e);
+    // ElevenLabs 실패 시 Web Speech 폴백
+    const synth = window.speechSynthesis;
+    const utter = new SpeechSynthesisUtterance(line.t);
+    utter.lang = 'ko-KR';
+    utter.rate = line.s === 'f' ? 0.95 : 0.88;
+    utter.pitch = line.s === 'f' ? 1.1 : 0.7;
+    utter.onend = () => setTimeout(() => speakNext(idx), 200);
+    synth.speak(utter);
+  }
+}
+
+async function speakSlide(idx) {
+  stopAudio();
+  if (!voiceEnabled) return;
+  const lines = talkScript[idx];
+  if (!lines || !lines.length) return;
+  talkQueue = [...lines];
+  await speakNext(idx);
+}
+
+function toggleVoice() {
+  voiceEnabled = !voiceEnabled;
+  if (voiceEnabled) {
+    if (!window._elApiKey) {
+      const key = prompt('🔑 ElevenLabs API 키를 입력하세요.\n(브라우저 세션에만 저장, 외부 전송 없음)', '');
+      if (!key || !key.trim().startsWith('sk_')) {
+        alert('올바른 API 키를 입력해 주세요. (sk_ 로 시작)');
+        voiceEnabled = false;
+        return;
+      }
+      window._elApiKey = key.trim();
+    }
+    btnVoice.classList.add('voice-on');
+    btnVoice.textContent = '🔊 음성 ON';
+    btnVoicePause.style.display = 'inline-block';
+    isPaused = false;
+    btnVoicePause.textContent = '⏸ 정지';
+    speakSlide(current);
+  } else {
+    stopAudio();
+    window.speechSynthesis?.cancel();
+    btnVoice.classList.remove('voice-on', 'speaking');
+    btnVoice.textContent = '🔊 음성';
+    btnVoicePause.style.display = 'none';
+  }
+}
+
+function togglePause() {
+  if (!voiceEnabled || !currentAudio) return;
+  if (isPaused) {
+    currentAudio.play();
+    isPaused = false;
+    btnVoicePause.textContent = '⏸ 정지';
+    voiceBadge.classList.add('active');
+  } else {
+    currentAudio.pause();
+    isPaused = true;
+    btnVoicePause.textContent = '▶ 재생';
+    voiceBadge.textContent = '⏸ 일시정지됨';
+  }
+}
+
+btnVoice.addEventListener('click', toggleVoice);
+btnVoicePause.addEventListener('click', togglePause);
+
+/* Checklist */
+document.querySelectorAll('.checklist li').forEach(li=>{li.addEventListener('click',()=>li.classList.toggle('checked'));});
+
+/* Init */
+(function init(){
+  const m=location.hash.match(/^#slide-(\d+)$/);
+  current=m?Math.max(0,Math.min(TOTAL-1,parseInt(m[1],10)-1)):0;
+  slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+  document.getElementById('total').textContent=TOTAL;
+  updateUI();initFragments();
+  const reveal=document.body.dataset.reveal||'all-at-once';
+  if(reveal!=='all-at-once')resetFragments(current);
+})();
+</script>
+
+</body>
+</html>
